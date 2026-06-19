@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import HeroSection from '@/components/HeroSection';
@@ -6,7 +8,7 @@ import CategoryCard from '@/components/CategoryCard';
 import ProductCard from '@/components/ProductCard';
 import Newsletter from '@/components/Newsletter';
 import AnimateIn from '@/components/AnimateIn';
-import { categories, getFeaturedProducts, getBestsellerProducts, SITE_NAME, SITE_URL } from '@/lib/data';
+import { getCategories, getFeaturedProducts, getBestsellerProducts, SITE_NAME, SITE_URL } from '@/lib/data';
 
 export const metadata: Metadata = {
   alternates: { canonical: SITE_URL },
@@ -42,7 +44,7 @@ export default function HomePage() {
           </AnimateIn>
 
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
-            {categories.map((cat, i) => (
+            {getCategories().map((cat, i) => (
               <AnimateIn key={cat.id} delay={i * 0.05}>
                 <CategoryCard category={cat} />
               </AnimateIn>

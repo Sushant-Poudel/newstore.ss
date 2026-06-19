@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
-import { formatPrice, WHATSAPP_NUMBER } from '@/lib/data';
+import { formatPrice, WHATSAPP_NUMBER } from '@/lib/constants';
 
 export default function CartPage() {
   const { items, totalItems, totalPrice, removeFromCart, updateQuantity, clearCart } = useCart();

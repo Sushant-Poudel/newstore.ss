@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/context/ToastContext';
 import type { Product } from '@/lib/types';
-import { formatPrice, getDiscount } from '@/lib/data';
+import { formatPrice, getDiscount } from '@/lib/constants';
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();

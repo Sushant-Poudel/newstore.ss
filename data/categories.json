@@ -1,0 +1,68 @@
+[
+  {
+    "id": "cat-1",
+    "slug": "shoes",
+    "name": "Shoes",
+    "description": "Sneakers, boots, heels, sandals & more",
+    "image": "https://placehold.co/600x400/1e293b/ffffff?text=Shoes",
+    "productCount": 3,
+    "icon": "👟",
+    "metaTitle": "Buy Shoes Online in Nepal | StyleNepal",
+    "metaDescription": "Shop the latest sneakers, boots, sandals and heels in Nepal at StyleNepal. Fast delivery, easy returns, best prices in NPR."
+  },
+  {
+    "id": "cat-2",
+    "slug": "clothing",
+    "name": "Clothing",
+    "description": "Shirts, kurtas, jackets, dresses & more",
+    "image": "https://placehold.co/600x400/1e293b/ffffff?text=Clothing",
+    "productCount": 3,
+    "icon": "👕",
+    "metaTitle": "Buy Clothing Online in Nepal | StyleNepal",
+    "metaDescription": "Shop mens and womens clothing in Nepal — shirts, kurtas, jackets, dresses and more. Great prices in NPR at StyleNepal."
+  },
+  {
+    "id": "cat-3",
+    "slug": "bags",
+    "name": "Bags",
+    "description": "Handbags, backpacks, wallets & more",
+    "image": "https://placehold.co/600x400/1e293b/ffffff?text=Bags",
+    "productCount": 3,
+    "icon": "👜",
+    "metaTitle": "Buy Bags Online in Nepal | StyleNepal",
+    "metaDescription": "Explore handbags, tote bags, backpacks, and wallets in Nepal. Shop online at StyleNepal with fast delivery and easy returns."
+  },
+  {
+    "id": "cat-4",
+    "slug": "jewelry",
+    "name": "Jewelry",
+    "description": "Necklaces, earrings, rings, bangles & more",
+    "image": "https://placehold.co/600x400/1e293b/ffffff?text=Jewelry",
+    "productCount": 3,
+    "icon": "💎",
+    "metaTitle": "Buy Jewelry Online in Nepal | StyleNepal",
+    "metaDescription": "Shop gold-plated necklaces, silver earrings, traditional bangles, and more at StyleNepal Nepal. Affordable prices, top quality."
+  },
+  {
+    "id": "cat-5",
+    "slug": "watches",
+    "name": "Watches",
+    "description": "Minimalist, sports, classic & smart watches",
+    "image": "https://placehold.co/600x400/1e293b/ffffff?text=Watches",
+    "productCount": 3,
+    "icon": "⌚",
+    "metaTitle": "Buy Watches Online in Nepal | StyleNepal",
+    "metaDescription": "Find the perfect watch in Nepal at StyleNepal — minimalist, sports, and luxury watches at the best prices in NPR."
+  },
+  {
+    "id": "cat-6",
+    "slug": "sunglasses",
+    "name": "Sunglasses",
+    "description": "Aviators, wayfarers, cat-eye & polarized",
+    "image": "https://placehold.co/600x400/1e293b/ffffff?text=Sunglasses",
+    "productCount": 3,
+    "icon": "🕶️",
+    "metaTitle": "Buy Sunglasses Online in Nepal | StyleNepal",
+    "metaDescription": "Shop stylish sunglasses in Nepal — aviators, wayfarers, cat-eye and polarized options. Fast delivery at StyleNepal."
+  }
+]

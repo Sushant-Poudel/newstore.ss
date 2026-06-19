@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { SITE_URL, products, categories } from '@/lib/data';
+import { SITE_URL, getProducts, getCategories } from '@/lib/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -31,14 +31,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
   ];
 
-  const categoryRoutes: MetadataRoute.Sitemap = categories.map((cat) => ({
+  const categoryRoutes: MetadataRoute.Sitemap = getCategories().map((cat) => ({
     url: `${SITE_URL}/category/${cat.slug}`,
     lastModified: now,
     changeFrequency: 'weekly',
     priority: 0.8,
   }));
 
-  const productRoutes: MetadataRoute.Sitemap = products.map((product) => ({
+  const productRoutes: MetadataRoute.Sitemap = getProducts().map((product) => ({
     url: `${SITE_URL}/products/${product.slug}`,
     lastModified: now,
     changeFrequency: 'weekly',

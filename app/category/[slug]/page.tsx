@@ -6,7 +6,7 @@ import { BreadcrumbJsonLd } from '@/components/JsonLd';
 import {
   getCategoryBySlug,
   getProductsByCategory,
-  categories,
+  getCategories,
   SITE_URL,
 } from '@/lib/data';
 
@@ -14,8 +14,10 @@ interface Props {
   params: { slug: string };
 }
 
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
-  return categories.map((cat) => ({ slug: cat.slug }));
+  return getCategories().map((cat) => ({ slug: cat.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

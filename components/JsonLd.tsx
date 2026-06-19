@@ -1,4 +1,4 @@
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/data';
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/constants';
 
 export function OrganizationJsonLd() {
   const schema = {

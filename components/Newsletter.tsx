@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { SITE_NAME } from '@/lib/data';
+import { SITE_NAME } from '@/lib/constants';
 
 export default function Newsletter() {
   const [email, setEmail] = useState('');

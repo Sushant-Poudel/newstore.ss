@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { SITE_NAME, WHATSAPP_NUMBER } from '@/lib/data';
+import { SITE_NAME, WHATSAPP_NUMBER } from '@/lib/constants';
 
 const contactInfo = [
   {

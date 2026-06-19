@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { SITE_NAME, WHATSAPP_NUMBER, categories } from '@/lib/data';
+import { SITE_NAME, WHATSAPP_NUMBER } from '@/lib/constants';
+import { getCategories } from '@/lib/data';
 
 export default function Footer() {
   return (
@@ -66,7 +67,7 @@ export default function Footer() {
               Categories
             </h3>
             <ul className="space-y-3">
-              {categories.map((cat) => (
+              {getCategories().map((cat) => (
                 <li key={cat.slug}>
                   <Link
                     href={`/category/${cat.slug}`}

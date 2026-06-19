@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getProductBySlug, products as allProducts, SITE_NAME, SITE_URL } from '@/lib/data';
+import { getProductBySlug, getProducts, SITE_NAME, SITE_URL } from '@/lib/data';
 import { ProductJsonLd, BreadcrumbJsonLd } from '@/components/JsonLd';
 import ProductDetailClient from '@/components/ProductDetailClient';
 
@@ -8,8 +8,10 @@ interface Props {
   params: { slug: string };
 }
 
+export const dynamic = 'force-dynamic';
+
 export async function generateStaticParams() {
-  return allProducts.map((p) => ({ slug: p.slug }));
+  return getProducts().map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -51,7 +53,7 @@ export default function ProductPage({ params }: Props) {
   const product = getProductBySlug(params.slug);
   if (!product) notFound();
 
-  const related = allProducts
+  const related = getProducts()
     .filter((p) => p.categorySlug === product.categorySlug && p.id !== product.id)
     .slice(0, 4);
 

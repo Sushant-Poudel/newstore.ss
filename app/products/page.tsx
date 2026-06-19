@@ -1,9 +1,11 @@
+export const dynamic = 'force-dynamic';
+
 import type { Metadata } from 'next';
 import ProductCard from '@/components/ProductCard';
 import AnimateIn from '@/components/AnimateIn';
 import Breadcrumb from '@/components/Breadcrumb';
 import { BreadcrumbJsonLd } from '@/components/JsonLd';
-import { products, categories, SITE_URL, SITE_NAME } from '@/lib/data';
+import { getProducts, getCategories, SITE_URL, SITE_NAME } from '@/lib/data';
 
 export const metadata: Metadata = {
   title: 'All Products',
@@ -24,6 +26,8 @@ const SORT_OPTIONS = [
 ];
 
 export default function ProductsPage({ searchParams }: Props) {
+  const products = getProducts();
+  const categories = getCategories();
   const search = searchParams.search?.toLowerCase() ?? '';
   const categoryFilter = searchParams.category ?? '';
   const sort = searchParams.sort ?? '';

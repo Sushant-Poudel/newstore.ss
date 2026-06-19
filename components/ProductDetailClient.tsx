@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/context/ToastContext';
 import type { Product } from '@/lib/types';
-import { formatPrice, getDiscount, WHATSAPP_NUMBER } from '@/lib/data';
+import { formatPrice, getDiscount, WHATSAPP_NUMBER } from '@/lib/constants';
 import ProductCard from '@/components/ProductCard';
 import Breadcrumb from '@/components/Breadcrumb';
 import AnimateIn from '@/components/AnimateIn';
