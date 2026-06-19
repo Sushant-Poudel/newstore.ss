@@ -1,17 +1,14 @@
 import type { Metadata } from 'next';
 import ProductCard from '@/components/ProductCard';
+import AnimateIn from '@/components/AnimateIn';
 import Breadcrumb from '@/components/Breadcrumb';
 import { BreadcrumbJsonLd } from '@/components/JsonLd';
 import { products, categories, SITE_URL, SITE_NAME } from '@/lib/data';
 
 export const metadata: Metadata = {
   title: 'All Products',
-  description: `Browse our full collection of fashion accessories in Nepal — shoes, clothing, bags, jewelry, watches, and sunglasses. Shop online at ${SITE_NAME} with fast delivery and easy returns.`,
+  description: `Browse our full collection of fashion accessories in Nepal — shoes, clothing, bags, jewelry, watches, and sunglasses. Shop at ${SITE_NAME} with fast delivery and easy returns.`,
   alternates: { canonical: `${SITE_URL}/products` },
-  openGraph: {
-    title: `All Products | ${SITE_NAME}`,
-    url: `${SITE_URL}/products`,
-  },
 };
 
 interface Props {
@@ -19,9 +16,9 @@ interface Props {
 }
 
 const SORT_OPTIONS = [
-  { value: 'default', label: 'Default' },
-  { value: 'price-asc', label: 'Price: Low to High' },
-  { value: 'price-desc', label: 'Price: High to Low' },
+  { value: '', label: 'Default' },
+  { value: 'price-asc', label: 'Price: Low → High' },
+  { value: 'price-desc', label: 'Price: High → Low' },
   { value: 'rating', label: 'Top Rated' },
   { value: 'newest', label: 'Newest First' },
 ];
@@ -29,22 +26,24 @@ const SORT_OPTIONS = [
 export default function ProductsPage({ searchParams }: Props) {
   const search = searchParams.search?.toLowerCase() ?? '';
   const categoryFilter = searchParams.category ?? '';
-  const sort = searchParams.sort ?? 'default';
+  const sort = searchParams.sort ?? '';
 
   let filtered = products.filter((p) => {
-    const matchesSearch =
+    const matchSearch =
       !search ||
       p.name.toLowerCase().includes(search) ||
       p.description.toLowerCase().includes(search) ||
-      p.tags.some((t) => t.toLowerCase().includes(search));
-    const matchesCategory = !categoryFilter || p.categorySlug === categoryFilter;
-    return matchesSearch && matchesCategory;
+      p.tags.some((t) => t.includes(search));
+    const matchCategory = !categoryFilter || p.categorySlug === categoryFilter;
+    return matchSearch && matchCategory;
   });
 
-  if (sort === 'price-asc') filtered = [...filtered].sort((a, b) => a.price - b.price);
-  else if (sort === 'price-desc') filtered = [...filtered].sort((a, b) => b.price - a.price);
-  else if (sort === 'rating') filtered = [...filtered].sort((a, b) => b.rating - a.rating);
-  else if (sort === 'newest') filtered = [...filtered].filter((p) => p.isNew).concat(filtered.filter((p) => !p.isNew));
+  if (sort === 'price-asc')  filtered = [...filtered].sort((a, b) => a.price - b.price);
+  if (sort === 'price-desc') filtered = [...filtered].sort((a, b) => b.price - a.price);
+  if (sort === 'rating')     filtered = [...filtered].sort((a, b) => b.rating - a.rating);
+  if (sort === 'newest')     filtered = [...filtered].sort((a) => (a.isNew ? -1 : 1));
+
+  const selectedCategory = categories.find((c) => c.slug === categoryFilter);
 
   return (
     <>
@@ -55,102 +54,110 @@ export default function ProductsPage({ searchParams }: Props) {
         ]}
       />
 
-      <div className="container-xl py-8">
-        <Breadcrumb crumbs={[{ label: 'Home', href: '/' }, { label: 'All Products' }]} />
+      {/* Page header */}
+      <div className="border-b border-cream-200 bg-white">
+        <div className="container-xl py-8">
+          <Breadcrumb
+            crumbs={[
+              { label: 'Home', href: '/' },
+              { label: selectedCategory ? selectedCategory.name : 'All Products' },
+            ]}
+          />
+          <div className="mt-3 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="section-title">
+                {search
+                  ? `Results for "${searchParams.search}"`
+                  : selectedCategory
+                  ? selectedCategory.name
+                  : 'All Products'}
+              </h1>
+              <p className="mt-1 text-xs text-brand-400">
+                {filtered.length} product{filtered.length !== 1 ? 's' : ''}
+              </p>
+            </div>
 
-        <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <h1 className="section-title">All Products</h1>
-            <p className="mt-1 text-sm text-slate-500">
-              {search ? (
-                <>Showing results for &ldquo;<strong>{searchParams.search}</strong>&rdquo;</>
-              ) : (
-                `${filtered.length} products available`
-              )}
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-6 flex flex-col gap-6 lg:flex-row">
-          {/* Sidebar filters */}
-          <aside className="w-full shrink-0 lg:w-56" aria-label="Filter products">
-            <div className="rounded-xl bg-white p-5 shadow-sm ring-1 ring-gray-100">
-              <h2 className="mb-4 text-sm font-bold uppercase tracking-wider text-slate-700">
-                Filter by Category
-              </h2>
-              <ul className="space-y-1">
-                <li>
+            {/* Sort (server-side via URL) */}
+            <div className="flex items-center gap-2">
+              <span className="text-[11px] uppercase tracking-widest text-brand-400">Sort:</span>
+              <div className="flex flex-wrap gap-1.5">
+                {SORT_OPTIONS.map((opt) => (
                   <a
-                    href="/products"
-                    className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
-                      !categoryFilter
-                        ? 'bg-brand-50 font-semibold text-brand-700'
-                        : 'text-slate-600 hover:bg-gray-50'
+                    key={opt.value}
+                    href={`/products?${categoryFilter ? `category=${categoryFilter}&` : ''}${search ? `search=${encodeURIComponent(search)}&` : ''}${opt.value ? `sort=${opt.value}` : ''}`}
+                    className={`px-3 py-1 text-[11px] font-medium uppercase tracking-widest transition-colors ${
+                      sort === opt.value
+                        ? 'bg-brand-900 text-white'
+                        : 'border border-cream-300 text-brand-500 hover:border-brand-900 hover:text-brand-900'
                     }`}
                   >
-                    All Categories
+                    {opt.label}
                   </a>
-                </li>
-                {categories.map((cat) => (
-                  <li key={cat.slug}>
-                    <a
-                      href={`/products?category=${cat.slug}${sort !== 'default' ? `&sort=${sort}` : ''}`}
-                      className={`flex items-center justify-between rounded-lg px-3 py-2 text-sm transition-colors ${
-                        categoryFilter === cat.slug
-                          ? 'bg-brand-50 font-semibold text-brand-700'
-                          : 'text-slate-600 hover:bg-gray-50'
-                      }`}
-                    >
-                      <span>
-                        <span aria-hidden="true" className="mr-2">{cat.icon}</span>
-                        {cat.name}
-                      </span>
-                      <span className="text-xs text-slate-400">{cat.productCount}</span>
-                    </a>
-                  </li>
                 ))}
-              </ul>
-
-              <div className="mt-6">
-                <h2 className="mb-3 text-sm font-bold uppercase tracking-wider text-slate-700">
-                  Sort By
-                </h2>
-                <ul className="space-y-1">
-                  {SORT_OPTIONS.map((opt) => (
-                    <li key={opt.value}>
-                      <a
-                        href={`/products?${categoryFilter ? `category=${categoryFilter}&` : ''}sort=${opt.value}`}
-                        className={`block rounded-lg px-3 py-2 text-sm transition-colors ${
-                          sort === opt.value
-                            ? 'bg-brand-50 font-semibold text-brand-700'
-                            : 'text-slate-600 hover:bg-gray-50'
-                        }`}
-                      >
-                        {opt.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="container-xl py-10">
+        <div className="flex flex-col gap-8 lg:flex-row">
+          {/* ── Sidebar ──────────────────────────────── */}
+          <aside className="w-full shrink-0 lg:w-48" aria-label="Filter by category">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-500 mb-3">
+              Category
+            </p>
+            <ul className="space-y-0.5">
+              <li>
+                <a
+                  href={`/products${sort ? `?sort=${sort}` : ''}`}
+                  className={`block py-2 text-sm transition-colors ${
+                    !categoryFilter
+                      ? 'font-semibold text-brand-900 underline underline-offset-2'
+                      : 'text-brand-500 hover:text-brand-900'
+                  }`}
+                >
+                  All Categories
+                </a>
+              </li>
+              {categories.map((cat) => (
+                <li key={cat.slug}>
+                  <a
+                    href={`/products?category=${cat.slug}${sort ? `&sort=${sort}` : ''}`}
+                    className={`flex items-center justify-between py-2 text-sm transition-colors ${
+                      categoryFilter === cat.slug
+                        ? 'font-semibold text-brand-900 underline underline-offset-2'
+                        : 'text-brand-500 hover:text-brand-900'
+                    }`}
+                  >
+                    <span>{cat.name}</span>
+                    <span className="text-[11px] text-brand-300">{cat.productCount}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </aside>
 
-          {/* Product grid */}
+          {/* ── Product grid ─────────────────────────── */}
           <div className="flex-1">
             {filtered.length > 0 ? (
-              <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-                {filtered.map((product) => (
-                  <ProductCard key={product.id} product={product} />
+              <div className="grid grid-cols-2 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                {filtered.map((product, i) => (
+                  <AnimateIn key={product.id} delay={Math.min(i * 0.05, 0.3)}>
+                    <ProductCard product={product} />
+                  </AnimateIn>
                 ))}
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center gap-4 rounded-xl bg-white py-20 text-center shadow-sm">
-                <span className="text-5xl">🔍</span>
-                <h3 className="text-lg font-bold text-slate-900">No products found</h3>
-                <p className="text-sm text-slate-500">
-                  Try a different search term or browse all categories.
-                </p>
-                <a href="/products" className="btn-primary">
+              <div className="flex flex-col items-center justify-center gap-5 py-24 text-center">
+                <svg className="h-14 w-14 text-cream-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+                <div>
+                  <h3 className="font-serif text-lg font-semibold text-brand-900">No products found</h3>
+                  <p className="mt-1 text-sm text-brand-500">Try a different search or browse all categories.</p>
+                </div>
+                <a href="/products" className="btn-outline btn-sm">
                   Clear filters
                 </a>
               </div>

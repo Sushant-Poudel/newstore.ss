@@ -3,36 +3,36 @@ import Link from 'next/link';
 export default function HeroSection() {
   return (
     <section aria-label="Hero banner" className="relative overflow-hidden bg-brand-900">
-      {/* Subtle texture overlay */}
+      {/* Subtle dot pattern */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.04]"
+        className="pointer-events-none absolute inset-0 opacity-[0.035]"
         style={{
           backgroundImage:
-            'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")',
+            'radial-gradient(circle, #ffffff 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
         }}
       />
 
       <div className="container-xl relative z-10">
-        <div className="grid min-h-[88vh] grid-cols-1 items-center gap-12 py-20 lg:grid-cols-2">
-          {/* Left — text */}
-          <div className="max-w-xl">
-            <span className="eyebrow text-gold-400">New Collection 2025</span>
+        <div className="grid min-h-[90vh] grid-cols-1 items-center gap-12 py-20 lg:grid-cols-2">
 
-            <h1 className="mt-5 font-serif text-5xl font-semibold leading-tight text-white sm:text-6xl lg:text-7xl text-balance">
-              Style That
-              <br />
-              <em className="not-italic text-gold-400">Speaks</em>
-              <br />
+          {/* Left — text (CSS stagger animations on load) */}
+          <div className="max-w-xl">
+            <span className="eyebrow hero-1 text-gold-400">New Collection 2025</span>
+
+            <h1 className="hero-2 mt-5 font-serif text-5xl font-semibold leading-[1.1] text-white sm:text-6xl lg:text-[5.5rem]">
+              Style That<br />
+              <em className="not-italic text-gold-400">Speaks</em><br />
               Nepal
             </h1>
 
-            <p className="mt-6 max-w-md text-base leading-relaxed text-brand-300">
-              Premium shoes, clothing, bags, jewellery, watches &amp; sunglasses — curated for
-              modern Nepal, delivered to your door.
+            <p className="hero-3 mt-6 max-w-md text-base leading-relaxed text-brand-300">
+              Premium shoes, clothing, bags, jewellery, watches &amp; sunglasses —
+              curated for modern Nepal, delivered to your door.
             </p>
 
-            <div className="mt-10 flex flex-wrap gap-4">
+            <div className="hero-4 mt-10 flex flex-wrap gap-4">
               <Link href="/products" className="btn-white">
                 Shop Collection
               </Link>
@@ -41,40 +41,57 @@ export default function HeroSection() {
               </Link>
             </div>
 
-            {/* Stats row */}
-            <div className="mt-14 flex gap-10 border-t border-white/10 pt-8">
+            {/* Stats */}
+            <div className="hero-5 mt-14 grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
               {[
                 { value: '500+', label: 'Products' },
-                { value: '10k+', label: 'Customers' },
-                { value: '77', label: 'Districts' },
+                { value: '10k+', label: 'Happy Customers' },
+                { value: '77', label: 'Districts Served' },
               ].map(({ value, label }) => (
                 <div key={label}>
                   <p className="font-serif text-2xl font-semibold text-white">{value}</p>
-                  <p className="mt-0.5 text-xs uppercase tracking-widest text-brand-400">{label}</p>
+                  <p className="mt-1 text-[10px] uppercase tracking-widest text-brand-400">{label}</p>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right — featured category grid */}
-          <div className="hidden lg:grid grid-cols-2 gap-3">
+          {/* Right — category grid (desktop only) */}
+          <div className="hero-3 hidden gap-3 lg:grid lg:grid-cols-2">
             {[
-              { label: 'Shoes', emoji: '👟', bg: 'from-stone-700 to-stone-900' },
-              { label: 'Jewelry', emoji: '💎', bg: 'from-amber-900 to-stone-900' },
-              { label: 'Bags', emoji: '👜', bg: 'from-stone-800 to-zinc-900' },
-              { label: 'Watches', emoji: '⌚', bg: 'from-neutral-700 to-stone-900' },
-            ].map(({ label, emoji, bg }) => (
+              { label: 'Shoes', href: '/category/shoes', emoji: '👟', delay: 'delay-100' },
+              { label: 'Jewellery', href: '/category/jewelry', emoji: '💎', delay: 'delay-150' },
+              { label: 'Bags', href: '/category/bags', emoji: '👜', delay: 'delay-200' },
+              { label: 'Watches', href: '/category/watches', emoji: '⌚', delay: 'delay-300' },
+            ].map(({ label, href, emoji }) => (
               <Link
                 key={label}
-                href={`/category/${label.toLowerCase()}`}
-                className={`group relative flex aspect-square items-end overflow-hidden rounded-sm bg-gradient-to-br ${bg} p-5`}
+                href={href}
+                className="
+                  group relative flex aspect-[3/4] flex-col items-start justify-end
+                  overflow-hidden bg-brand-800 p-5
+                  ring-1 ring-white/5
+                  transition-all duration-500 ease-out
+                  hover:ring-gold-600/60 hover:scale-[0.98]
+                "
               >
-                <span className="absolute right-4 top-4 text-4xl opacity-40 transition-all duration-500 group-hover:opacity-70 group-hover:scale-110">
+                {/* Big emoji fading into corner */}
+                <span
+                  aria-hidden="true"
+                  className="absolute right-5 top-5 text-5xl opacity-20 transition-all duration-500 group-hover:opacity-50 group-hover:scale-110"
+                >
                   {emoji}
                 </span>
-                <span className="relative z-10 text-xs font-medium uppercase tracking-widest text-white/80 group-hover:text-white transition-colors">
-                  {label}
-                </span>
+
+                {/* Category label */}
+                <div className="relative z-10">
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 transition-colors group-hover:text-gold-400">
+                    {label}
+                  </p>
+                  <p className="mt-1 text-[11px] uppercase tracking-widest text-white/30 transition-colors group-hover:text-white/60">
+                    Shop now →
+                  </p>
+                </div>
               </Link>
             ))}
           </div>
