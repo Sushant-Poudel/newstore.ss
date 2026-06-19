@@ -9,7 +9,7 @@
 }
 
 @keyframes heroFadeUp {
-  from { opacity: 0; transform: translateY(20px); }
+  from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -27,7 +27,10 @@
 @layer base {
   html { scroll-behavior: smooth; }
 
-  body { @apply text-brand-800 antialiased; }
+  body {
+    @apply text-brand-700 antialiased;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
 
   h1, h2, h3, h4 { @apply font-serif text-brand-900; }
 
@@ -38,21 +41,21 @@
 
 /* ─── Components ─────────────────────────────────────────────── */
 @layer components {
-  /* Buttons — all square-edged for editorial fashion feel */
+  /* Buttons */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2
-           bg-brand-900 px-7 py-3.5
-           text-xs font-medium uppercase tracking-widest text-white
+           bg-brand-900 px-8 py-3.5
+           text-[11px] font-medium uppercase tracking-[0.18em] text-white
            transition-all duration-200
-           hover:bg-brand-700 active:scale-[0.98]
+           hover:bg-brand-800 active:scale-[0.98]
            focus-visible:outline-brand-900
            disabled:pointer-events-none disabled:opacity-40;
   }
 
   .btn-outline {
     @apply inline-flex items-center justify-center gap-2
-           border border-brand-900 px-7 py-3.5
-           text-xs font-medium uppercase tracking-widest text-brand-900
+           border border-brand-900 px-8 py-3.5
+           text-[11px] font-medium uppercase tracking-[0.18em] text-brand-900
            transition-all duration-200
            hover:bg-brand-900 hover:text-white active:scale-[0.98]
            focus-visible:outline-brand-900;
@@ -60,22 +63,22 @@
 
   .btn-ghost-white {
     @apply inline-flex items-center justify-center gap-2
-           border border-white/50 px-7 py-3.5
-           text-xs font-medium uppercase tracking-widest text-white
+           border border-white/40 px-8 py-3.5
+           text-[11px] font-medium uppercase tracking-[0.18em] text-white/80
            transition-all duration-200
            hover:border-white hover:bg-white hover:text-brand-900 active:scale-[0.98];
   }
 
   .btn-white {
     @apply inline-flex items-center justify-center gap-2
-           bg-white px-7 py-3.5
-           text-xs font-medium uppercase tracking-widest text-brand-900
+           bg-white px-8 py-3.5
+           text-[11px] font-medium uppercase tracking-[0.18em] text-brand-900
            transition-all duration-200
-           hover:bg-cream-200 active:scale-[0.98];
+           hover:bg-cream-100 active:scale-[0.98];
   }
 
   .btn-sm {
-    @apply px-5 py-2.5 text-[11px];
+    @apply px-5 py-2.5 text-[10px];
   }
 
   /* Layout */
@@ -85,16 +88,16 @@
 
   /* Typography */
   .section-title {
-    @apply font-serif text-2xl font-semibold text-brand-900 sm:text-3xl;
+    @apply font-serif text-2xl font-semibold text-brand-900 sm:text-[1.75rem];
   }
 
   .eyebrow {
-    @apply block text-[10px] font-semibold uppercase tracking-[0.25em] text-gold-700;
+    @apply block text-[9px] font-semibold uppercase tracking-[0.3em] text-gold-700;
   }
 
   /* Checkout form input */
   .checkout-input {
-    @apply w-full rounded border border-cream-300 bg-white px-4 py-3 text-sm text-brand-900
+    @apply w-full border border-cream-300 bg-white px-4 py-3 text-sm text-brand-900
            placeholder-brand-300
            transition-colors duration-150
            focus:border-brand-900 focus:outline-none;
@@ -103,7 +106,7 @@
   /* Card interactions */
   .card-lift {
     @apply transition-all duration-300 ease-out
-           hover:-translate-y-1 hover:shadow-lg;
+           hover:-translate-y-0.5 hover:shadow-md;
   }
 }
 
@@ -117,11 +120,11 @@
   }
 
   /* Hero stagger classes */
-  .hero-1 { animation: heroFadeUp 0.75s cubic-bezier(.4,0,.2,1) 0.05s both; }
-  .hero-2 { animation: heroFadeUp 0.75s cubic-bezier(.4,0,.2,1) 0.20s both; }
-  .hero-3 { animation: heroFadeUp 0.75s cubic-bezier(.4,0,.2,1) 0.35s both; }
-  .hero-4 { animation: heroFadeUp 0.75s cubic-bezier(.4,0,.2,1) 0.50s both; }
-  .hero-5 { animation: heroFadeUp 0.75s cubic-bezier(.4,0,.2,1) 0.65s both; }
+  .hero-1 { animation: heroFadeUp 0.9s cubic-bezier(.4,0,.2,1) 0.05s both; }
+  .hero-2 { animation: heroFadeUp 0.9s cubic-bezier(.4,0,.2,1) 0.20s both; }
+  .hero-3 { animation: heroFadeUp 0.9s cubic-bezier(.4,0,.2,1) 0.38s both; }
+  .hero-4 { animation: heroFadeUp 0.9s cubic-bezier(.4,0,.2,1) 0.55s both; }
+  .hero-5 { animation: heroFadeUp 0.9s cubic-bezier(.4,0,.2,1) 0.72s both; }
 
   .pulse-cart { animation: pulse-cart 0.4s ease-in-out; }
 
@@ -131,4 +134,5 @@
     background-size: 200% 100%;
     animation: shimmer 1.4s infinite;
   }
+
 }

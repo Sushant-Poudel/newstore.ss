@@ -2,101 +2,65 @@ import Link from 'next/link';
 
 export default function HeroSection() {
   return (
-    <section aria-label="Hero banner" className="relative overflow-hidden bg-brand-900">
-      {/* Subtle dot pattern */}
+    <section aria-label="Hero banner" className="relative overflow-hidden bg-brand-950">
+      {/* Grain texture overlay */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.035]"
+        className="pointer-events-none absolute inset-0 opacity-[0.018]"
         style={{
-          backgroundImage:
-            'radial-gradient(circle, #ffffff 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
+          backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E")',
+          backgroundRepeat: 'repeat',
+          backgroundSize: '128px',
         }}
       />
 
       <div className="container-xl relative z-10">
-        <div className="grid min-h-[90vh] grid-cols-1 items-center gap-12 py-20 lg:grid-cols-2">
+        <div className="flex min-h-[92vh] flex-col items-center justify-center py-24 text-center">
 
-          {/* Left — text (CSS stagger animations on load) */}
-          <div className="max-w-xl">
-            <span className="eyebrow hero-1 text-gold-400">New Collection 2025</span>
+          {/* Eyebrow */}
+          <span className="hero-1 inline-block text-[10px] font-medium uppercase tracking-[0.35em] text-gold-500">
+            Nepal&apos;s Premier Fashion Destination
+          </span>
 
-            <h1 className="hero-2 mt-5 font-serif text-5xl font-semibold leading-[1.1] text-white sm:text-6xl lg:text-[5.5rem]">
-              Style That<br />
-              <em className="not-italic text-gold-400">Speaks</em><br />
-              Nepal
-            </h1>
+          {/* Main headline */}
+          <h1 className="hero-2 mt-8 max-w-4xl font-serif text-[clamp(3rem,8vw,6.5rem)] font-semibold leading-[0.95] tracking-tight text-white">
+            Style That<br />
+            <em className="not-italic text-gold-400">Speaks</em> Nepal
+          </h1>
 
-            <p className="hero-3 mt-6 max-w-md text-base leading-relaxed text-brand-300">
-              Premium shoes, clothing, bags, jewellery, watches &amp; sunglasses —
-              curated for modern Nepal, delivered to your door.
-            </p>
+          {/* Subheadline */}
+          <p className="hero-3 mt-8 max-w-sm text-[13px] leading-loose tracking-wide text-brand-400">
+            Premium shoes, clothing, bags &amp; accessories —<br />curated and delivered across Nepal.
+          </p>
 
-            <div className="hero-4 mt-10 flex flex-wrap gap-4">
-              <Link href="/products" className="btn-white">
-                Shop Collection
-              </Link>
-              <Link href="/category/shoes" className="btn-ghost-white">
-                Explore Shoes
-              </Link>
-            </div>
-
-            {/* Stats */}
-            <div className="hero-5 mt-14 grid grid-cols-3 gap-6 border-t border-white/10 pt-8">
-              {[
-                { value: '500+', label: 'Products' },
-                { value: '10k+', label: 'Happy Customers' },
-                { value: '77', label: 'Districts Served' },
-              ].map(({ value, label }) => (
-                <div key={label}>
-                  <p className="font-serif text-2xl font-semibold text-white">{value}</p>
-                  <p className="mt-1 text-[10px] uppercase tracking-widest text-brand-400">{label}</p>
-                </div>
-              ))}
-            </div>
+          {/* CTAs */}
+          <div className="hero-4 mt-12 flex flex-wrap items-center justify-center gap-4">
+            <Link href="/products" className="btn-white px-10 py-4 text-[11px]">
+              Shop the Collection
+            </Link>
+            <Link href="/category/shoes" className="btn-ghost-white px-10 py-4 text-[11px]">
+              Explore Shoes
+            </Link>
           </div>
 
-          {/* Right — category grid (desktop only) */}
-          <div className="hero-3 hidden gap-3 lg:grid lg:grid-cols-2">
+          {/* Stats — separated by thin dividers */}
+          <div className="hero-5 mt-20 flex items-center gap-0 divide-x divide-white/10">
             {[
-              { label: 'Shoes', href: '/category/shoes', emoji: '👟', delay: 'delay-100' },
-              { label: 'Jewellery', href: '/category/jewelry', emoji: '💎', delay: 'delay-150' },
-              { label: 'Bags', href: '/category/bags', emoji: '👜', delay: 'delay-200' },
-              { label: 'Watches', href: '/category/watches', emoji: '⌚', delay: 'delay-300' },
-            ].map(({ label, href, emoji }) => (
-              <Link
-                key={label}
-                href={href}
-                className="
-                  group relative flex aspect-[3/4] flex-col items-start justify-end
-                  overflow-hidden bg-brand-800 p-5
-                  ring-1 ring-white/5
-                  transition-all duration-500 ease-out
-                  hover:ring-gold-600/60 hover:scale-[0.98]
-                "
-              >
-                {/* Big emoji fading into corner */}
-                <span
-                  aria-hidden="true"
-                  className="absolute right-5 top-5 text-5xl opacity-20 transition-all duration-500 group-hover:opacity-50 group-hover:scale-110"
-                >
-                  {emoji}
-                </span>
-
-                {/* Category label */}
-                <div className="relative z-10">
-                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 transition-colors group-hover:text-gold-400">
-                    {label}
-                  </p>
-                  <p className="mt-1 text-[11px] uppercase tracking-widest text-white/30 transition-colors group-hover:text-white/60">
-                    Shop now →
-                  </p>
-                </div>
-              </Link>
+              { value: '500+', label: 'Products' },
+              { value: '10k+', label: 'Customers' },
+              { value: '77', label: 'Districts' },
+            ].map(({ value, label }) => (
+              <div key={label} className="px-10 text-center first:pl-0 last:pr-0">
+                <p className="font-serif text-2xl font-semibold text-white">{value}</p>
+                <p className="mt-1 text-[9px] uppercase tracking-[0.25em] text-brand-500">{label}</p>
+              </div>
             ))}
           </div>
         </div>
       </div>
+
+      {/* Bottom fade to background */}
+      <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-brand-950 to-transparent" aria-hidden="true" />
     </section>
   );
 }

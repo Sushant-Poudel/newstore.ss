@@ -20,35 +20,33 @@ export default function ProductCard({ product }: { product: Product }) {
   function handleAddToBag(e: React.MouseEvent) {
     e.preventDefault();
     e.stopPropagation();
-    if (adding) return;
-
+    if (adding || product.stock === 0) return;
     setAdding(true);
     addToCart(product, 1);
     showToast(product.name, product.image, 1);
-    setTimeout(() => setAdding(false), 1200);
+    setTimeout(() => setAdding(false), 1400);
   }
 
   return (
     <article className="group flex flex-col">
-      {/* ── Image block ─────────────────────────────────────── */}
+      {/* Image */}
       <div className="relative overflow-hidden bg-cream-100">
         {/* Badges */}
-        <div className="absolute left-2.5 top-2.5 z-10 flex flex-col gap-1.5">
+        <div className="absolute left-3 top-3 z-10 flex flex-col gap-1">
           {discount > 0 && (
-            <span className="bg-brand-900 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-white">
+            <span className="bg-brand-900 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.15em] text-white">
               -{discount}%
             </span>
           )}
           {product.isNew && (
-            <span className="bg-gold-600 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-widest text-white">
+            <span className="bg-gold-600 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.15em] text-white">
               New
             </span>
           )}
         </div>
 
-        {/* Image link */}
         <Link href={`/products/${product.slug}`} aria-label={product.name}>
-          <div className="relative aspect-[4/5] w-full">
+          <div className="relative aspect-square w-full">
             <Image
               src={product.image}
               alt={product.name}
@@ -59,7 +57,7 @@ export default function ProductCard({ product }: { product: Product }) {
           </div>
         </Link>
 
-        {/* "Add to Bag" slides up from bottom on hover (desktop) */}
+        {/* Add to bag — slides up on hover */}
         <button
           onClick={handleAddToBag}
           disabled={adding || product.stock === 0}
@@ -67,73 +65,54 @@ export default function ProductCard({ product }: { product: Product }) {
           className="
             absolute bottom-0 left-0 right-0 z-10
             translate-y-full
-            bg-brand-900 py-3.5
-            text-[11px] font-semibold uppercase tracking-widest text-white
-            transition-all duration-300 ease-out
-            hover:bg-brand-700
+            bg-brand-900/95 py-3
+            text-[10px] font-medium uppercase tracking-[0.2em] text-white
+            transition-transform duration-300 ease-out
+            hover:bg-brand-800
             group-hover:translate-y-0
             hidden sm:block
-            disabled:bg-brand-600
+            disabled:bg-brand-700
           "
         >
-          {adding ? '✓ Added' : product.stock === 0 ? 'Out of Stock' : 'Add to Bag'}
+          {adding ? '✓ Added to Bag' : product.stock === 0 ? 'Out of Stock' : 'Add to Bag'}
         </button>
       </div>
 
-      {/* ── Info ────────────────────────────────────────────── */}
-      <div className="flex flex-1 flex-col gap-1 pt-3 pb-2">
+      {/* Info */}
+      <div className="flex flex-1 flex-col pt-3.5">
         <Link
           href={`/category/${product.categorySlug}`}
-          className="eyebrow hover:text-gold-800 transition-colors"
+          className="text-[9px] font-medium uppercase tracking-[0.22em] text-brand-400 transition-colors hover:text-gold-700"
           tabIndex={-1}
         >
           {product.category}
         </Link>
 
         <Link href={`/products/${product.slug}`}>
-          <h3 className="font-sans text-sm font-medium leading-snug text-brand-900 transition-colors hover:text-gold-700 line-clamp-2">
+          <h3 className="mt-1.5 font-sans text-[13px] font-medium leading-snug text-brand-900 transition-colors hover:text-gold-700 line-clamp-2">
             {product.name}
           </h3>
         </Link>
 
-        {/* Stars */}
-        <div className="flex items-center gap-1.5 mt-0.5" aria-label={`${product.rating} out of 5 stars`}>
-          {Array.from({ length: 5 }).map((_, i) => (
-            <svg
-              key={i}
-              className={`h-2.5 w-2.5 ${i < Math.round(product.rating) ? 'text-gold-500' : 'text-cream-300'}`}
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              aria-hidden="true"
-            >
-              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-            </svg>
-          ))}
-          <span className="text-[11px] text-brand-400">({product.reviewCount})</span>
-        </div>
-
-        {/* Price */}
-        <div className="flex items-baseline gap-2 mt-1">
-          <span className="text-sm font-semibold text-brand-900">{formatPrice(product.price)}</span>
+        <div className="mt-2 flex items-baseline gap-2">
+          <span className="text-[13px] font-semibold text-brand-900">{formatPrice(product.price)}</span>
           {product.originalPrice && (
-            <span className="text-xs text-brand-400 line-through">
-              {formatPrice(product.originalPrice)}
-            </span>
+            <span className="text-[11px] text-brand-400 line-through">{formatPrice(product.originalPrice)}</span>
           )}
         </div>
 
-        {/* Mobile add to bag button */}
+        {/* Mobile: always-visible add button */}
         <button
           onClick={handleAddToBag}
           disabled={adding || product.stock === 0}
           className="
-            sm:hidden mt-2
-            w-full border border-brand-900 py-2.5
-            text-[11px] font-semibold uppercase tracking-widest text-brand-900
+            sm:hidden mt-3
+            w-full border border-brand-200 py-2.5
+            text-[10px] font-medium uppercase tracking-[0.2em] text-brand-700
             transition-all duration-200
-            hover:bg-brand-900 hover:text-white
+            hover:border-brand-900 hover:bg-brand-900 hover:text-white
             active:scale-[0.98]
-            disabled:border-brand-400 disabled:text-brand-400
+            disabled:border-brand-100 disabled:text-brand-300
           "
         >
           {adding ? '✓ Added' : product.stock === 0 ? 'Out of Stock' : 'Add to Bag'}

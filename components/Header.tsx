@@ -5,14 +5,18 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
 
-const navLinks = [
+const navLeft = [
   { href: '/products', label: 'Shop All' },
   { href: '/category/shoes', label: 'Shoes' },
   { href: '/category/clothing', label: 'Clothing' },
   { href: '/category/bags', label: 'Bags' },
+];
+
+const navRight = [
   { href: '/category/jewelry', label: 'Jewelry' },
   { href: '/category/watches', label: 'Watches' },
   { href: '/category/sunglasses', label: 'Sunglasses' },
+  { href: '/about', label: 'About' },
 ];
 
 export default function Header() {
@@ -24,10 +28,15 @@ export default function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 4);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -36,95 +45,85 @@ export default function Header() {
     }
   }
 
+  const linkClass = (href: string) =>
+    `text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-200 ${
+      pathname === href ? 'text-brand-900' : 'text-brand-500 hover:text-brand-900'
+    }`;
+
   return (
-    <header className="sticky top-0 z-50 w-full bg-white">
-      {/* Announcement bar */}
-      <div className="bg-brand-900 py-2 text-center text-xs font-medium tracking-widest text-white uppercase">
-        Free delivery above NPR 2,000 &nbsp;&bull;&nbsp; Cash on Delivery available &nbsp;&bull;&nbsp; Easy 7-day returns
+    <header className={`sticky top-0 z-50 w-full bg-white transition-shadow duration-300 ${scrolled ? 'shadow-[0_1px_0_0_#e2ddd4]' : ''}`}>
+      {/* Announcement bar — ultra thin */}
+      <div className="bg-brand-900 py-1.5 text-center text-[10px] font-medium tracking-[0.22em] text-brand-300 uppercase">
+        Free delivery on orders above NPR 2,000 &nbsp;·&nbsp; Cash on Delivery &nbsp;·&nbsp; 7-day returns
       </div>
 
       {/* Main header */}
-      <div className={`border-b transition-shadow duration-300 ${scrolled ? 'border-cream-200 shadow-sm' : 'border-cream-200'}`}>
+      <div className="border-b border-cream-200">
         <div className="container-xl">
-          <div className="flex h-16 items-center justify-between gap-6">
+          <div className="flex h-[60px] items-center justify-between gap-4">
 
-            {/* Left: mobile menu toggle */}
+            {/* Mobile: hamburger */}
             <button
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(!menuOpen)}
-              className="text-brand-700 hover:text-brand-900 transition-colors lg:hidden"
+              className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] text-brand-700 lg:hidden"
             >
-              {menuOpen ? (
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              ) : (
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
+              <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? 'translate-y-[6px] rotate-45' : ''}`} />
+              <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+              <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? '-translate-y-[6px] -rotate-45' : ''}`} />
             </button>
 
-            {/* Logo */}
-            <Link href="/" className="flex-shrink-0">
-              <span className="font-serif text-xl font-semibold tracking-wide text-brand-900">
-                Style<span className="text-gold-700">Nepal</span>
+            {/* Desktop nav left */}
+            <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary navigation left">
+              {navLeft.map((link) => (
+                <Link key={link.href} href={link.href} className={linkClass(link.href)}>
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* Logo — centered */}
+            <Link href="/" className="absolute left-1/2 -translate-x-1/2">
+              <span className="font-serif text-[1.35rem] font-semibold tracking-wide text-brand-900">
+                Style<span className="text-gold-600">Nepal</span>
               </span>
             </Link>
 
-            {/* Desktop Nav */}
-            <nav className="hidden items-center gap-7 lg:flex" aria-label="Main navigation">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={`text-xs font-medium uppercase tracking-widest transition-colors ${
-                    pathname === link.href
-                      ? 'text-brand-900 border-b border-brand-900 pb-0.5'
-                      : 'text-brand-500 hover:text-brand-900'
-                  }`}
-                >
+            {/* Desktop nav right */}
+            <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary navigation right">
+              {navRight.map((link) => (
+                <Link key={link.href} href={link.href} className={linkClass(link.href)}>
                   {link.label}
                 </Link>
               ))}
             </nav>
 
             {/* Right icons */}
-            <div className="flex items-center gap-4">
-              {/* Search */}
+            <div className="flex items-center gap-5">
               <button
                 aria-label="Search"
                 onClick={() => setSearchOpen(!searchOpen)}
-                className="text-brand-500 hover:text-brand-900 transition-colors"
+                className="text-brand-400 transition-colors hover:text-brand-900"
               >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </button>
 
-              {/* Cart */}
               <Link
                 href="/cart"
-                aria-label={`Shopping cart, ${totalItems} items`}
-                className="relative text-brand-500 hover:text-brand-900 transition-colors"
+                aria-label={`Shopping bag, ${totalItems} items`}
+                className="relative text-brand-400 transition-colors hover:text-brand-900"
               >
-                <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
                 {totalItems > 0 && (
-                  <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-brand-900 text-[10px] font-bold text-white">
+                  <span className="absolute -right-1.5 -top-1.5 flex h-[14px] w-[14px] items-center justify-center bg-brand-900 text-[9px] font-bold text-white">
                     {totalItems > 9 ? '9+' : totalItems}
                   </span>
                 )}
-              </Link>
-
-              {/* About — desktop only */}
-              <Link
-                href="/about"
-                className="hidden text-xs font-medium uppercase tracking-widest text-brand-500 hover:text-brand-900 transition-colors xl:block"
-              >
-                About
               </Link>
             </div>
           </div>
@@ -137,11 +136,11 @@ export default function Header() {
                   type="search"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search shoes, bags, jewelry…"
+                  placeholder="Search for products…"
                   autoFocus
-                  className="w-full border border-cream-300 bg-cream-50 px-4 py-2.5 text-sm text-brand-900 placeholder:text-brand-400 focus:border-brand-900 focus:outline-none focus:ring-0"
+                  className="w-full border-0 border-b border-brand-200 bg-transparent px-1 py-2 text-sm text-brand-900 placeholder:text-brand-300 focus:border-brand-900 focus:outline-none"
                 />
-                <button type="submit" className="btn-primary px-5 py-2.5 text-xs">
+                <button type="submit" className="shrink-0 text-[11px] font-medium uppercase tracking-[0.18em] text-brand-500 hover:text-brand-900 transition-colors">
                   Search
                 </button>
               </form>
@@ -152,36 +151,29 @@ export default function Header() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <nav className="border-b border-cream-200 bg-white lg:hidden" aria-label="Mobile navigation">
-          <div className="container-xl py-4 flex flex-col gap-1">
-            {navLinks.map((link) => (
+        <div className="fixed inset-0 top-[calc(60px+28px)] z-40 bg-white lg:hidden" aria-label="Mobile navigation">
+          <nav className="container-xl py-8 flex flex-col gap-1">
+            {[...navLeft, ...navRight].map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`block px-2 py-2.5 text-sm font-medium uppercase tracking-widest transition-colors ${
-                  pathname === link.href ? 'text-brand-900' : 'text-brand-500 hover:text-brand-900'
+                className={`block py-3 text-[11px] font-medium uppercase tracking-[0.22em] border-b border-cream-100 ${
+                  pathname === link.href ? 'text-brand-900' : 'text-brand-500'
                 }`}
               >
                 {link.label}
               </Link>
             ))}
             <Link
-              href="/about"
-              onClick={() => setMenuOpen(false)}
-              className="block px-2 py-2.5 text-sm font-medium uppercase tracking-widest text-brand-500 hover:text-brand-900"
-            >
-              About
-            </Link>
-            <Link
               href="/contact"
               onClick={() => setMenuOpen(false)}
-              className="block px-2 py-2.5 text-sm font-medium uppercase tracking-widest text-brand-500 hover:text-brand-900"
+              className="block py-3 text-[11px] font-medium uppercase tracking-[0.22em] text-brand-500"
             >
               Contact
             </Link>
-          </div>
-        </nav>
+          </nav>
+        </div>
       )}
     </header>
   );
