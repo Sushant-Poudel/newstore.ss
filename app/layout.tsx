@@ -1,10 +1,23 @@
 import type { Metadata } from 'next';
+import { Playfair_Display, Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { CartProvider } from '@/context/CartContext';
 import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/JsonLd';
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/data';
+
+const playfair = Playfair_Display({
+  subsets: ['latin'],
+  variable: '--font-playfair',
+  display: 'swap',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -47,14 +60,7 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: `${SITE_NAME} — Nepal's Fashion & Accessories Store`,
     description: SITE_DESCRIPTION,
-    images: [
-      {
-        url: `${SITE_URL}/og-image.jpg`,
-        width: 1200,
-        height: 630,
-        alt: `${SITE_NAME} — Nepal's Fashion & Accessories Store`,
-      },
-    ],
+    images: [{ url: `${SITE_URL}/og-image.jpg`, width: 1200, height: 630, alt: SITE_NAME }],
   },
   twitter: {
     card: 'summary_large_image',
@@ -62,24 +68,19 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
     images: [`${SITE_URL}/og-image.jpg`],
   },
-  alternates: {
-    canonical: SITE_URL,
-  },
-  verification: {
-    google: 'your-google-verification-code',
-  },
+  alternates: { canonical: SITE_URL },
+  verification: { google: 'your-google-verification-code' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <head>
         <OrganizationJsonLd />
         <WebSiteJsonLd />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
-      <body className="flex min-h-screen flex-col bg-gray-50">
+      <body className="flex min-h-screen flex-col bg-cream-50 font-sans antialiased">
         <CartProvider>
           <Header />
           <main className="flex-1">{children}</main>

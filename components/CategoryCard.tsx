@@ -5,23 +5,28 @@ export default function CategoryCard({ category }: { category: Category }) {
   return (
     <Link
       href={`/category/${category.slug}`}
-      className="group flex flex-col items-center gap-3 rounded-xl bg-white p-6 text-center shadow-sm ring-1 ring-gray-100 card-hover"
+      className="group flex flex-col items-start gap-3 border border-cream-200 bg-white p-6 transition-all duration-300 hover:border-brand-900 hover:shadow-md"
     >
       <span
         aria-hidden="true"
-        className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 text-3xl transition-transform duration-300 group-hover:scale-110"
+        className="text-2xl opacity-70 transition-transform duration-300 group-hover:scale-110"
       >
         {category.icon}
       </span>
-      <div>
-        <h3 className="font-bold text-slate-900 group-hover:text-brand-600 transition-colors">
+
+      <div className="flex-1">
+        <h3 className="font-serif text-base font-semibold text-brand-900 transition-colors group-hover:text-gold-700">
           {category.name}
         </h3>
-        <p className="mt-0.5 text-xs text-slate-500">{category.description}</p>
+        <p className="mt-1 text-xs leading-relaxed text-brand-500">{category.description}</p>
       </div>
-      <span className="rounded-full bg-brand-50 px-3 py-0.5 text-xs font-semibold text-brand-700">
-        {category.productCount} products
-      </span>
+
+      <div className="flex w-full items-center justify-between">
+        <span className="text-xs text-brand-400">{category.productCount} items</span>
+        <span className="text-xs font-medium uppercase tracking-widest text-brand-400 transition-colors group-hover:text-brand-900">
+          Shop →
+        </span>
+      </div>
     </Link>
   );
 }

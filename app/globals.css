@@ -8,25 +8,33 @@
   }
 
   body {
-    @apply text-slate-800 antialiased;
+    @apply text-brand-800 antialiased;
   }
 
-  * {
-    @apply box-border;
+  h1, h2, h3, h4 {
+    @apply font-serif text-brand-900;
   }
 }
 
 @layer components {
+  /* Primary CTA — dark charcoal, very premium */
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-brand-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-500 focus:ring-offset-2 disabled:opacity-50;
+    @apply inline-flex items-center justify-center gap-2 rounded-none bg-brand-900 px-7 py-3.5 text-sm font-medium tracking-widest text-white uppercase transition-colors hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-brand-900 focus:ring-offset-2 disabled:opacity-40;
   }
 
+  /* Ghost / outline button */
   .btn-outline {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg border-2 border-brand-600 px-6 py-3 text-sm font-semibold text-brand-600 transition-colors hover:bg-brand-600 hover:text-white focus:outline-none;
+    @apply inline-flex items-center justify-center gap-2 rounded-none border border-brand-900 px-7 py-3.5 text-sm font-medium tracking-widest text-brand-900 uppercase transition-colors hover:bg-brand-900 hover:text-white focus:outline-none;
   }
 
-  .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-slate-700 focus:outline-none;
+  /* White ghost (for dark backgrounds) */
+  .btn-ghost-white {
+    @apply inline-flex items-center justify-center gap-2 rounded-none border border-white px-7 py-3.5 text-sm font-medium tracking-widest text-white uppercase transition-colors hover:bg-white hover:text-brand-900 focus:outline-none;
+  }
+
+  /* White filled (for dark backgrounds) */
+  .btn-white {
+    @apply inline-flex items-center justify-center gap-2 rounded-none bg-white px-7 py-3.5 text-sm font-medium tracking-widest text-brand-900 uppercase transition-colors hover:bg-cream-200 focus:outline-none;
   }
 
   .container-xl {
@@ -34,11 +42,20 @@
   }
 
   .section-title {
-    @apply text-2xl font-bold text-slate-900 sm:text-3xl;
+    @apply font-serif text-2xl font-semibold text-brand-900 sm:text-3xl;
+  }
+
+  .eyebrow {
+    @apply block text-xs font-medium uppercase tracking-[0.2em] text-gold-700;
   }
 
   .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+    @apply transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg;
+  }
+
+  /* Clean divider */
+  .divider {
+    @apply border-t border-cream-200;
   }
 }
 
