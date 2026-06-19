@@ -5,6 +5,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { CartProvider } from '@/context/CartContext';
 import { ToastProvider } from '@/context/ToastContext';
+import { CheckoutProvider } from '@/context/CheckoutContext';
 import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/JsonLd';
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/data';
 
@@ -67,9 +68,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="flex min-h-screen flex-col bg-cream-50 font-sans antialiased">
         <CartProvider>
           <ToastProvider>
-            <Header />
-            <main className="flex-1">{children}</main>
-            <Footer />
+            <CheckoutProvider>
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+            </CheckoutProvider>
           </ToastProvider>
         </CartProvider>
       </body>

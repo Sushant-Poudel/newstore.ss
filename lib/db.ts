@@ -17,6 +17,11 @@ export interface SiteSettings {
   freeDeliveryThreshold: number;
   deliveryCharge: number;
   phoneNumber: string;
+  paymentQrUrl: string;
+  paymentBankName: string;
+  paymentAccountName: string;
+  paymentAccountNumber: string;
+  paymentInstructions: string;
 }
 
 const DATA_DIR = path.join(process.cwd(), 'data');

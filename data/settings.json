@@ -12,5 +12,10 @@
   "promoSubtitle": "New deals every week — only at StyleNepal.",
   "freeDeliveryThreshold": 2000,
   "deliveryCharge": 150,
-  "phoneNumber": "+977-9800000000"
+  "phoneNumber": "+977-9800000000",
+  "paymentQrUrl": "",
+  "paymentBankName": "Khalti / eSewa",
+  "paymentAccountName": "StyleNepal",
+  "paymentAccountNumber": "9800000000",
+  "paymentInstructions": "Scan the QR code above to pay via Khalti or eSewa. Once payment is done, take a screenshot and send it to our WhatsApp for order confirmation."
 }

@@ -92,6 +92,14 @@
     @apply block text-[10px] font-semibold uppercase tracking-[0.25em] text-gold-700;
   }
 
+  /* Checkout form input */
+  .checkout-input {
+    @apply w-full rounded border border-cream-300 bg-white px-4 py-3 text-sm text-brand-900
+           placeholder-brand-300
+           transition-colors duration-150
+           focus:border-brand-900 focus:outline-none;
+  }
+
   /* Card interactions */
   .card-lift {
     @apply transition-all duration-300 ease-out

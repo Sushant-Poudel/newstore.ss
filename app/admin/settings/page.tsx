@@ -134,6 +134,37 @@ export default function AdminSettingsPage() {
           </div>
         </section>
 
+        {/* Payment */}
+        <section className="rounded-lg border border-gray-800 bg-gray-900 p-6">
+          <h2 className="mb-4 text-xs font-semibold uppercase tracking-widest text-amber-400">Payment / Checkout QR</h2>
+          <div className="space-y-4">
+            <Field label="QR Code Image URL" hint="Upload your Khalti/eSewa QR image somewhere (e.g. imgur, Cloudinary) and paste the URL here">
+              <input className={INPUT} value={settings.paymentQrUrl} onChange={(e) => set('paymentQrUrl', e.target.value)} placeholder="https://i.imgur.com/yourqr.png" />
+            </Field>
+            {settings.paymentQrUrl && (
+              <div className="rounded border border-gray-700 bg-gray-800 p-3 flex items-center gap-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={settings.paymentQrUrl} alt="QR preview" className="h-20 w-20 object-contain rounded" />
+                <p className="text-xs text-gray-400">QR preview looks correct</p>
+              </div>
+            )}
+            <div className="grid gap-4 md:grid-cols-3">
+              <Field label="Bank / Wallet Name">
+                <input className={INPUT} value={settings.paymentBankName} onChange={(e) => set('paymentBankName', e.target.value)} placeholder="Khalti / eSewa" />
+              </Field>
+              <Field label="Account Name">
+                <input className={INPUT} value={settings.paymentAccountName} onChange={(e) => set('paymentAccountName', e.target.value)} placeholder="StyleNepal" />
+              </Field>
+              <Field label="Account Number / Phone">
+                <input className={INPUT} value={settings.paymentAccountNumber} onChange={(e) => set('paymentAccountNumber', e.target.value)} placeholder="9800000000" />
+              </Field>
+            </div>
+            <Field label="Payment Instructions" hint="Shown below the QR code on the checkout payment page">
+              <textarea className={`${INPUT} resize-none`} rows={3} value={settings.paymentInstructions} onChange={(e) => set('paymentInstructions', e.target.value)} />
+            </Field>
+          </div>
+        </section>
+
         <div className="flex justify-end">
           <button
             type="submit"
