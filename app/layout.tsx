@@ -64,8 +64,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <OrganizationJsonLd />
         <WebSiteJsonLd />
         <link rel="icon" href="/favicon.ico" sizes="any" />
+        {/* Flash-free theme detection — runs before paint */}
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function(){
+            var s = localStorage.getItem('theme');
+            var dark = s === 'dark' || (!s && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            if (dark) document.documentElement.classList.add('dark');
+          })();
+        `}} />
       </head>
-      <body className="flex min-h-screen flex-col bg-cream-50 font-sans antialiased">
+      <body className="flex min-h-screen flex-col bg-cream-50 font-sans antialiased dark:bg-brand-950 dark:text-brand-300">
         <CartProvider>
           <ToastProvider>
             <CheckoutProvider>

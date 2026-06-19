@@ -49,7 +49,8 @@
            transition-all duration-200
            hover:bg-brand-800 active:scale-[0.98]
            focus-visible:outline-brand-900
-           disabled:pointer-events-none disabled:opacity-40;
+           disabled:pointer-events-none disabled:opacity-40
+           dark:bg-gold-600 dark:text-brand-950 dark:hover:bg-gold-500;
   }
 
   .btn-outline {
@@ -58,7 +59,9 @@
            text-[11px] font-medium uppercase tracking-[0.18em] text-brand-900
            transition-all duration-200
            hover:bg-brand-900 hover:text-white active:scale-[0.98]
-           focus-visible:outline-brand-900;
+           focus-visible:outline-brand-900
+           dark:border-brand-600 dark:text-brand-300
+           dark:hover:border-gold-600 dark:hover:bg-gold-600 dark:hover:text-brand-950;
   }
 
   .btn-ghost-white {
@@ -74,7 +77,8 @@
            bg-white px-8 py-3.5
            text-[11px] font-medium uppercase tracking-[0.18em] text-brand-900
            transition-all duration-200
-           hover:bg-cream-100 active:scale-[0.98];
+           hover:bg-cream-100 active:scale-[0.98]
+           dark:bg-brand-800 dark:text-white dark:hover:bg-brand-700;
   }
 
   .btn-sm {

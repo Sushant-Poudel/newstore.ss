@@ -59,7 +59,7 @@ export default function ProductsPage({ searchParams }: Props) {
       />
 
       {/* Page header */}
-      <div className="border-b border-cream-200 bg-white">
+      <div className="border-b border-cream-200 dark:border-brand-900 bg-white dark:bg-brand-950">
         <div className="container-xl py-8">
           <Breadcrumb
             crumbs={[
@@ -69,7 +69,7 @@ export default function ProductsPage({ searchParams }: Props) {
           />
           <div className="mt-3 flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h1 className="section-title">
+              <h1 className="section-title dark:text-white">
                 {search
                   ? `Results for "${searchParams.search}"`
                   : selectedCategory
@@ -91,8 +91,8 @@ export default function ProductsPage({ searchParams }: Props) {
                     href={`/products?${categoryFilter ? `category=${categoryFilter}&` : ''}${search ? `search=${encodeURIComponent(search)}&` : ''}${opt.value ? `sort=${opt.value}` : ''}`}
                     className={`px-3 py-1 text-[11px] font-medium uppercase tracking-widest transition-colors ${
                       sort === opt.value
-                        ? 'bg-brand-900 text-white'
-                        : 'border border-cream-300 text-brand-500 hover:border-brand-900 hover:text-brand-900'
+                        ? 'bg-brand-900 text-white dark:bg-gold-600 dark:text-brand-950'
+                        : 'border border-cream-300 dark:border-brand-800 text-brand-500 dark:text-brand-500 hover:border-brand-900 hover:text-brand-900 dark:hover:border-gold-600 dark:hover:text-gold-400'
                     }`}
                   >
                     {opt.label}
@@ -117,8 +117,8 @@ export default function ProductsPage({ searchParams }: Props) {
                   href={`/products${sort ? `?sort=${sort}` : ''}`}
                   className={`block py-2 text-sm transition-colors ${
                     !categoryFilter
-                      ? 'font-semibold text-brand-900 underline underline-offset-2'
-                      : 'text-brand-500 hover:text-brand-900'
+                      ? 'font-semibold text-brand-900 dark:text-white underline underline-offset-2'
+                      : 'text-brand-500 hover:text-brand-900 dark:hover:text-white'
                   }`}
                 >
                   All Categories
@@ -130,12 +130,12 @@ export default function ProductsPage({ searchParams }: Props) {
                     href={`/products?category=${cat.slug}${sort ? `&sort=${sort}` : ''}`}
                     className={`flex items-center justify-between py-2 text-sm transition-colors ${
                       categoryFilter === cat.slug
-                        ? 'font-semibold text-brand-900 underline underline-offset-2'
-                        : 'text-brand-500 hover:text-brand-900'
+                        ? 'font-semibold text-brand-900 dark:text-white underline underline-offset-2'
+                        : 'text-brand-500 hover:text-brand-900 dark:hover:text-white'
                     }`}
                   >
                     <span>{cat.name}</span>
-                    <span className="text-[11px] text-brand-300">{cat.productCount}</span>
+                    <span className="text-[11px] text-brand-300 dark:text-brand-700">{cat.productCount}</span>
                   </a>
                 </li>
               ))}
@@ -154,11 +154,11 @@ export default function ProductsPage({ searchParams }: Props) {
               </div>
             ) : (
               <div className="flex flex-col items-center justify-center gap-5 py-24 text-center">
-                <svg className="h-14 w-14 text-cream-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <svg className="h-14 w-14 text-cream-300 dark:text-brand-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <div>
-                  <h3 className="font-serif text-lg font-semibold text-brand-900">No products found</h3>
+                  <h3 className="font-serif text-lg font-semibold text-brand-900 dark:text-white">No products found</h3>
                   <p className="mt-1 text-sm text-brand-500">Try a different search or browse all categories.</p>
                 </div>
                 <a href="/products" className="btn-outline btn-sm">

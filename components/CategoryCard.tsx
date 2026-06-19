@@ -5,17 +5,17 @@ export default function CategoryCard({ category }: { category: Category }) {
   return (
     <Link
       href={`/category/${category.slug}`}
-      className="group flex flex-col items-center gap-3 border border-cream-200 bg-white px-4 py-6 text-center transition-all duration-300 hover:border-brand-800 hover:shadow-sm"
+      className="group flex flex-col items-center gap-3 border border-cream-200 bg-white px-4 py-6 text-center transition-all duration-300 hover:border-brand-800 hover:shadow-sm dark:border-brand-800 dark:bg-brand-900 dark:hover:border-gold-700"
     >
       <span aria-hidden="true" className="text-2xl opacity-60 transition-transform duration-300 group-hover:scale-110">
         {category.icon}
       </span>
 
       <div>
-        <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-900 transition-colors group-hover:text-gold-700">
+        <h3 className="text-[11px] font-semibold uppercase tracking-[0.18em] text-brand-900 transition-colors group-hover:text-gold-700 dark:text-brand-300 dark:group-hover:text-gold-400">
           {category.name}
         </h3>
-        <p className="mt-1 text-[10px] text-brand-400">{category.productCount} items</p>
+        <p className="mt-1 text-[10px] text-brand-400 dark:text-brand-600">{category.productCount} items</p>
       </div>
     </Link>
   );

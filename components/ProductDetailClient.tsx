@@ -41,7 +41,6 @@ export default function ProductDetailClient({ product, related }: Props) {
     router.push('/checkout');
   }
 
-
   return (
     <div className="container-xl py-8 pb-28 sm:pb-8">
       <Breadcrumb
@@ -54,9 +53,9 @@ export default function ProductDetailClient({ product, related }: Props) {
       />
 
       <div className="mt-8 grid gap-12 lg:grid-cols-2">
-        {/* ── Images ───────────────────────────────────────── */}
+        {/* Images */}
         <div className="flex flex-col gap-3">
-          <div className="relative aspect-[4/5] overflow-hidden bg-cream-100">
+          <div className="relative aspect-[4/5] overflow-hidden bg-cream-100 dark:bg-brand-900">
             <Image
               src={product.images[activeImage] ?? product.image}
               alt={product.name}
@@ -66,18 +65,17 @@ export default function ProductDetailClient({ product, related }: Props) {
               className="object-cover transition-opacity duration-300"
             />
             {discount > 0 && (
-              <span className="absolute left-4 top-4 bg-brand-900 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
+              <span className="absolute left-4 top-4 bg-brand-900 dark:bg-gold-600 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white dark:text-brand-950">
                 -{discount}%
               </span>
             )}
             {product.isNew && (
-              <span className="absolute left-4 top-12 bg-gold-600 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white">
+              <span className="absolute left-4 top-12 bg-gold-600 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-white dark:text-brand-950">
                 New
               </span>
             )}
           </div>
 
-          {/* Thumbnails */}
           {product.images.length > 1 && (
             <div className="grid grid-cols-3 gap-2">
               {product.images.map((img, i) => (
@@ -88,7 +86,7 @@ export default function ProductDetailClient({ product, related }: Props) {
                   aria-pressed={activeImage === i}
                   className={`relative aspect-square overflow-hidden transition-all duration-200 ${
                     activeImage === i
-                      ? 'ring-2 ring-brand-900 ring-offset-1'
+                      ? 'ring-2 ring-brand-900 dark:ring-gold-600 ring-offset-1'
                       : 'opacity-60 hover:opacity-100'
                   }`}
                 >
@@ -99,18 +97,17 @@ export default function ProductDetailClient({ product, related }: Props) {
           )}
         </div>
 
-        {/* ── Info ─────────────────────────────────────────── */}
+        {/* Info */}
         <AnimateIn from="right">
           <div className="flex flex-col gap-6">
-            {/* Category + name */}
             <div>
               <Link
                 href={`/category/${product.categorySlug}`}
-                className="eyebrow hover:text-gold-800 transition-colors"
+                className="eyebrow hover:text-gold-800 dark:hover:text-gold-400 transition-colors"
               >
                 {product.category}
               </Link>
-              <h1 className="mt-2 font-serif text-3xl font-semibold leading-tight text-brand-900 sm:text-4xl">
+              <h1 className="mt-2 font-serif text-3xl font-semibold leading-tight text-brand-900 dark:text-white sm:text-4xl">
                 {product.name}
               </h1>
             </div>
@@ -121,7 +118,7 @@ export default function ProductDetailClient({ product, related }: Props) {
                 {Array.from({ length: 5 }).map((_, i) => (
                   <svg
                     key={i}
-                    className={`h-4 w-4 ${i < Math.round(product.rating) ? 'text-gold-500' : 'text-cream-300'}`}
+                    className={`h-4 w-4 ${i < Math.round(product.rating) ? 'text-gold-500' : 'text-cream-300 dark:text-brand-800'}`}
                     fill="currentColor"
                     viewBox="0 0 20 20"
                     aria-hidden="true"
@@ -130,14 +127,14 @@ export default function ProductDetailClient({ product, related }: Props) {
                   </svg>
                 ))}
               </div>
-              <span className="text-sm font-medium text-brand-900">{product.rating}</span>
+              <span className="text-sm font-medium text-brand-900 dark:text-brand-300">{product.rating}</span>
               <span className="text-sm text-brand-400">·</span>
               <span className="text-sm text-brand-400">{product.reviewCount} reviews</span>
             </div>
 
             {/* Price */}
             <div className="flex items-baseline gap-3">
-              <span className="font-serif text-3xl font-semibold text-brand-900">
+              <span className="font-serif text-3xl font-semibold text-brand-900 dark:text-white">
                 {formatPrice(product.price)}
               </span>
               {product.originalPrice && (
@@ -145,7 +142,7 @@ export default function ProductDetailClient({ product, related }: Props) {
                   <span className="text-lg text-brand-400 line-through">
                     {formatPrice(product.originalPrice)}
                   </span>
-                  <span className="text-sm font-medium text-gold-700">
+                  <span className="text-sm font-medium text-gold-700 dark:text-gold-400">
                     Save {formatPrice(product.originalPrice - product.price)}
                   </span>
                 </>
@@ -153,7 +150,7 @@ export default function ProductDetailClient({ product, related }: Props) {
             </div>
 
             {/* Description */}
-            <p className="text-sm leading-relaxed text-brand-600">{product.description}</p>
+            <p className="text-sm leading-relaxed text-brand-600 dark:text-brand-400">{product.description}</p>
 
             {/* Stock */}
             <div className="flex items-center gap-2">
@@ -161,7 +158,7 @@ export default function ProductDetailClient({ product, related }: Props) {
                 className={`h-2 w-2 rounded-full ${product.stock > 10 ? 'bg-emerald-500' : product.stock > 0 ? 'bg-amber-500' : 'bg-red-500'}`}
                 aria-hidden="true"
               />
-              <span className="text-sm text-brand-600">
+              <span className="text-sm text-brand-600 dark:text-brand-400">
                 {product.stock > 10
                   ? 'In Stock'
                   : product.stock > 0
@@ -172,28 +169,27 @@ export default function ProductDetailClient({ product, related }: Props) {
 
             {/* Qty + Actions */}
             <div className="flex flex-col gap-3">
-              {/* Qty row */}
               <div className="flex items-center gap-4">
-                <span className="text-xs font-semibold uppercase tracking-widest text-brand-600">
+                <span className="text-xs font-semibold uppercase tracking-widest text-brand-600 dark:text-brand-500">
                   Quantity
                 </span>
-                <div className="flex items-center border border-brand-200">
+                <div className="flex items-center border border-brand-200 dark:border-brand-700">
                   <button
                     onClick={() => setQty(Math.max(1, qty - 1))}
                     aria-label="Decrease quantity"
-                    className="flex h-10 w-10 items-center justify-center text-brand-600 transition-colors hover:bg-cream-100 hover:text-brand-900 active:scale-90"
+                    className="flex h-10 w-10 items-center justify-center text-brand-600 dark:text-brand-400 transition-colors hover:bg-cream-100 dark:hover:bg-brand-800 hover:text-brand-900 dark:hover:text-white active:scale-90"
                   >
                     <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 12H4" />
                     </svg>
                   </button>
-                  <span className="min-w-[2.5rem] text-center text-sm font-semibold text-brand-900">
+                  <span className="min-w-[2.5rem] text-center text-sm font-semibold text-brand-900 dark:text-white">
                     {qty}
                   </span>
                   <button
                     onClick={() => setQty(Math.min(product.stock, qty + 1))}
                     aria-label="Increase quantity"
-                    className="flex h-10 w-10 items-center justify-center text-brand-600 transition-colors hover:bg-cream-100 hover:text-brand-900 active:scale-90"
+                    className="flex h-10 w-10 items-center justify-center text-brand-600 dark:text-brand-400 transition-colors hover:bg-cream-100 dark:hover:bg-brand-800 hover:text-brand-900 dark:hover:text-white active:scale-90"
                   >
                     <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -202,7 +198,7 @@ export default function ProductDetailClient({ product, related }: Props) {
                 </div>
               </div>
 
-              {/* Buy Now — primary CTA */}
+              {/* Buy Now */}
               <button
                 onClick={handleBuyNow}
                 disabled={product.stock === 0}
@@ -214,12 +210,12 @@ export default function ProductDetailClient({ product, related }: Props) {
                 {product.stock === 0 ? 'Out of Stock' : 'Buy Now'}
               </button>
 
-              {/* Add to bag — secondary */}
+              {/* Add to bag */}
               <button
                 onClick={handleAddToCart}
                 disabled={product.stock === 0}
                 className={`btn-outline w-full justify-center py-3.5 text-sm transition-all ${
-                  added ? 'border-emerald-600 text-emerald-700 hover:bg-emerald-600' : ''
+                  added ? 'border-emerald-600 text-emerald-700 dark:border-emerald-700 dark:text-emerald-400' : ''
                 }`}
               >
                 {added ? (
@@ -241,14 +237,14 @@ export default function ProductDetailClient({ product, related }: Props) {
             </div>
 
             {/* Key features */}
-            <div className="border-t border-cream-200 pt-6">
+            <div className="border-t border-cream-200 dark:border-brand-800 pt-6">
               <p className="text-[10px] font-semibold uppercase tracking-widest text-brand-500">
                 Key Features
               </p>
               <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {product.features.map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-sm text-brand-600">
-                    <svg className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <li key={f} className="flex items-start gap-2 text-sm text-brand-600 dark:text-brand-400">
+                    <svg className="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold-600 dark:text-gold-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                     {f}
@@ -257,8 +253,7 @@ export default function ProductDetailClient({ product, related }: Props) {
               </ul>
             </div>
 
-            {/* SKU */}
-            <p className="text-[11px] text-brand-400">
+            <p className="text-[11px] text-brand-400 dark:text-brand-700">
               SKU: {product.sku} · Brand: {product.brand}
             </p>
           </div>
@@ -267,9 +262,9 @@ export default function ProductDetailClient({ product, related }: Props) {
 
       {/* Long description */}
       <AnimateIn className="mt-14">
-        <div className="border-t border-cream-200 pt-10">
-          <h2 className="font-serif text-xl font-semibold text-brand-900">Product Description</h2>
-          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-brand-600">
+        <div className="border-t border-cream-200 dark:border-brand-800 pt-10">
+          <h2 className="font-serif text-xl font-semibold text-brand-900 dark:text-white">Product Description</h2>
+          <p className="mt-4 max-w-3xl text-sm leading-relaxed text-brand-600 dark:text-brand-400">
             {product.longDescription}
           </p>
         </div>
@@ -279,7 +274,7 @@ export default function ProductDetailClient({ product, related }: Props) {
       {related.length > 0 && (
         <section className="mt-16" aria-labelledby="related-heading">
           <AnimateIn>
-            <h2 id="related-heading" className="section-title">You May Also Like</h2>
+            <h2 id="related-heading" className="section-title dark:text-white">You May Also Like</h2>
           </AnimateIn>
           <div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-10 lg:grid-cols-4">
             {related.map((p, i) => (
@@ -291,14 +286,14 @@ export default function ProductDetailClient({ product, related }: Props) {
         </section>
       )}
 
-      {/* Sticky mobile add-to-bag bar */}
+      {/* Sticky mobile bar */}
       <div
-        className="fixed bottom-0 left-0 right-0 z-40 flex items-center gap-3 border-t border-cream-200 bg-white px-4 py-3 shadow-xl sm:hidden"
+        className="fixed bottom-0 left-0 right-0 z-40 flex items-center gap-3 border-t border-cream-200 dark:border-brand-800 bg-white dark:bg-brand-950 px-4 py-3 shadow-xl sm:hidden"
         aria-label="Mobile purchase bar"
       >
         <div className="flex-1 min-w-0">
-          <p className="truncate text-xs font-medium text-brand-700">{product.name}</p>
-          <p className="text-sm font-bold text-brand-900">{formatPrice(product.price)}</p>
+          <p className="truncate text-xs font-medium text-brand-700 dark:text-brand-300">{product.name}</p>
+          <p className="text-sm font-bold text-brand-900 dark:text-white">{formatPrice(product.price)}</p>
         </div>
         <button
           onClick={handleAddToCart}

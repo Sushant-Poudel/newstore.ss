@@ -17,13 +17,13 @@ export default function Breadcrumb({ crumbs }: { crumbs: Crumb[] }) {
                 <span className="text-brand-300" aria-hidden="true">/</span>
               )}
               {isLast || !crumb.href ? (
-                <span className={`font-medium uppercase tracking-wider ${isLast ? 'text-brand-700' : 'text-brand-400'}`}>
+                <span className={`font-medium uppercase tracking-wider ${isLast ? 'text-brand-700 dark:text-brand-300' : 'text-brand-400 dark:text-brand-600'}`}>
                   {crumb.label}
                 </span>
               ) : (
                 <Link
                   href={crumb.href}
-                  className="font-medium uppercase tracking-wider text-brand-400 transition-colors hover:text-brand-900"
+                  className="font-medium uppercase tracking-wider text-brand-400 dark:text-brand-600 transition-colors hover:text-brand-900 dark:hover:text-white"
                 >
                   {crumb.label}
                 </Link>

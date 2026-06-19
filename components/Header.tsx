@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import { useCart } from '@/context/CartContext';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const navLeft = [
   { href: '/products', label: 'Shop All' },
@@ -47,18 +48,22 @@ export default function Header() {
 
   const linkClass = (href: string) =>
     `text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-200 ${
-      pathname === href ? 'text-brand-900' : 'text-brand-500 hover:text-brand-900'
+      pathname === href
+        ? 'text-brand-900 dark:text-white'
+        : 'text-brand-500 hover:text-brand-900 dark:text-brand-500 dark:hover:text-white'
     }`;
 
   return (
-    <header className={`sticky top-0 z-50 w-full bg-white transition-shadow duration-300 ${scrolled ? 'shadow-[0_1px_0_0_#e2ddd4]' : ''}`}>
-      {/* Announcement bar — ultra thin */}
-      <div className="bg-brand-900 py-1.5 text-center text-[10px] font-medium tracking-[0.22em] text-brand-300 uppercase">
+    <header className={`sticky top-0 z-50 w-full bg-white dark:bg-brand-950 transition-shadow duration-300 ${
+      scrolled ? 'shadow-[0_1px_0_0_#e2ddd4] dark:shadow-[0_1px_0_0_#252320]' : ''
+    }`}>
+      {/* Announcement bar */}
+      <div className="bg-brand-900 dark:bg-brand-950 border-b border-transparent dark:border-brand-900 py-1.5 text-center text-[10px] font-medium tracking-[0.22em] text-brand-300 uppercase">
         Free delivery on orders above NPR 2,000 &nbsp;·&nbsp; Cash on Delivery &nbsp;·&nbsp; 7-day returns
       </div>
 
       {/* Main header */}
-      <div className="border-b border-cream-200">
+      <div className="border-b border-cream-200 dark:border-brand-900">
         <div className="container-xl">
           <div className="flex h-[60px] items-center justify-between gap-4">
 
@@ -67,7 +72,7 @@ export default function Header() {
               aria-label="Toggle menu"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(!menuOpen)}
-              className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] text-brand-700 lg:hidden"
+              className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] text-brand-700 dark:text-brand-400 lg:hidden"
             >
               <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? 'translate-y-[6px] rotate-45' : ''}`} />
               <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
@@ -85,8 +90,8 @@ export default function Header() {
 
             {/* Logo — centered */}
             <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-              <span className="font-serif text-[1.35rem] font-semibold tracking-wide text-brand-900">
-                Style<span className="text-gold-600">Nepal</span>
+              <span className="font-serif text-[1.35rem] font-semibold tracking-wide text-brand-900 dark:text-white">
+                Style<span className="text-gold-600 dark:text-gold-500">Nepal</span>
               </span>
             </Link>
 
@@ -101,10 +106,12 @@ export default function Header() {
 
             {/* Right icons */}
             <div className="flex items-center gap-5">
+              <ThemeToggle />
+
               <button
                 aria-label="Search"
                 onClick={() => setSearchOpen(!searchOpen)}
-                className="text-brand-400 transition-colors hover:text-brand-900"
+                className="text-brand-400 transition-colors hover:text-brand-900 dark:hover:text-white"
               >
                 <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -114,13 +121,13 @@ export default function Header() {
               <Link
                 href="/cart"
                 aria-label={`Shopping bag, ${totalItems} items`}
-                className="relative text-brand-400 transition-colors hover:text-brand-900"
+                className="relative text-brand-400 transition-colors hover:text-brand-900 dark:hover:text-white"
               >
                 <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                 </svg>
                 {totalItems > 0 && (
-                  <span className="absolute -right-1.5 -top-1.5 flex h-[14px] w-[14px] items-center justify-center bg-brand-900 text-[9px] font-bold text-white">
+                  <span className="absolute -right-1.5 -top-1.5 flex h-[14px] w-[14px] items-center justify-center bg-brand-900 dark:bg-gold-600 text-[9px] font-bold text-white dark:text-brand-950">
                     {totalItems > 9 ? '9+' : totalItems}
                   </span>
                 )}
@@ -130,7 +137,7 @@ export default function Header() {
 
           {/* Search bar */}
           {searchOpen && (
-            <div className="border-t border-cream-200 py-3">
+            <div className="border-t border-cream-200 dark:border-brand-900 py-3">
               <form onSubmit={handleSearch} className="flex gap-2">
                 <input
                   type="search"
@@ -138,9 +145,9 @@ export default function Header() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search for products…"
                   autoFocus
-                  className="w-full border-0 border-b border-brand-200 bg-transparent px-1 py-2 text-sm text-brand-900 placeholder:text-brand-300 focus:border-brand-900 focus:outline-none"
+                  className="w-full border-0 border-b border-brand-200 dark:border-brand-700 bg-transparent px-1 py-2 text-sm text-brand-900 dark:text-white placeholder:text-brand-300 dark:placeholder:text-brand-600 focus:border-brand-900 dark:focus:border-gold-600 focus:outline-none"
                 />
-                <button type="submit" className="shrink-0 text-[11px] font-medium uppercase tracking-[0.18em] text-brand-500 hover:text-brand-900 transition-colors">
+                <button type="submit" className="shrink-0 text-[11px] font-medium uppercase tracking-[0.18em] text-brand-500 dark:text-brand-400 hover:text-brand-900 dark:hover:text-white transition-colors">
                   Search
                 </button>
               </form>
@@ -151,15 +158,15 @@ export default function Header() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="fixed inset-0 top-[calc(60px+28px)] z-40 bg-white lg:hidden" aria-label="Mobile navigation">
+        <div className="fixed inset-0 top-[calc(60px+28px)] z-40 bg-white dark:bg-brand-950 lg:hidden overflow-y-auto">
           <nav className="container-xl py-8 flex flex-col gap-1">
             {[...navLeft, ...navRight].map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`block py-3 text-[11px] font-medium uppercase tracking-[0.22em] border-b border-cream-100 ${
-                  pathname === link.href ? 'text-brand-900' : 'text-brand-500'
+                className={`block py-3 text-[11px] font-medium uppercase tracking-[0.22em] border-b border-cream-100 dark:border-brand-900 ${
+                  pathname === link.href ? 'text-brand-900 dark:text-white' : 'text-brand-500 dark:text-brand-500'
                 }`}
               >
                 {link.label}
@@ -168,7 +175,7 @@ export default function Header() {
             <Link
               href="/contact"
               onClick={() => setMenuOpen(false)}
-              className="block py-3 text-[11px] font-medium uppercase tracking-[0.22em] text-brand-500"
+              className="block py-3 text-[11px] font-medium uppercase tracking-[0.22em] text-brand-500 dark:text-brand-500"
             >
               Contact
             </Link>

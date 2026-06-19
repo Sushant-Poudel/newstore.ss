@@ -4,6 +4,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import HeroSection from '@/components/HeroSection';
 import BenefitsBar from '@/components/BenefitsBar';
+import FlashDealBanner from '@/components/FlashDealBanner';
 import CategoryCard from '@/components/CategoryCard';
 import ProductCard from '@/components/ProductCard';
 import Newsletter from '@/components/Newsletter';
@@ -21,20 +22,21 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <FlashDealBanner />
       <BenefitsBar />
 
       {/* ── Shop by Category ────────────────────────────────── */}
-      <section aria-labelledby="categories-heading" className="py-24 bg-cream-50">
+      <section aria-labelledby="categories-heading" className="py-24 bg-cream-50 dark:bg-brand-950">
         <div className="container-xl">
           <AnimateIn>
             <div className="mb-12 flex items-end justify-between">
               <div>
                 <span className="eyebrow">Collections</span>
-                <h2 id="categories-heading" className="section-title mt-3">Shop by Category</h2>
+                <h2 id="categories-heading" className="section-title mt-3 dark:text-white">Shop by Category</h2>
               </div>
               <Link
                 href="/products"
-                className="hidden text-[10px] font-medium uppercase tracking-[0.2em] text-brand-400 underline-offset-4 transition-colors hover:text-brand-900 hover:underline sm:block"
+                className="hidden text-[10px] font-medium uppercase tracking-[0.2em] text-brand-400 underline-offset-4 transition-colors hover:text-brand-900 dark:hover:text-white hover:underline sm:block"
               >
                 View all →
               </Link>
@@ -52,17 +54,17 @@ export default function HomePage() {
       </section>
 
       {/* ── Featured Products ───────────────────────────────── */}
-      <section aria-labelledby="featured-heading" className="bg-white py-24">
+      <section aria-labelledby="featured-heading" className="bg-white dark:bg-brand-950 py-24">
         <div className="container-xl">
           <AnimateIn>
             <div className="mb-12 flex items-end justify-between">
               <div>
                 <span className="eyebrow">Handpicked</span>
-                <h2 id="featured-heading" className="section-title mt-3">Featured Products</h2>
+                <h2 id="featured-heading" className="section-title mt-3 dark:text-white">Featured Products</h2>
               </div>
               <Link
                 href="/products"
-                className="hidden text-[10px] font-medium uppercase tracking-[0.2em] text-brand-400 underline-offset-4 transition-colors hover:text-brand-900 hover:underline sm:block"
+                className="hidden text-[10px] font-medium uppercase tracking-[0.2em] text-brand-400 underline-offset-4 transition-colors hover:text-brand-900 dark:hover:text-white hover:underline sm:block"
               >
                 Shop all →
               </Link>
@@ -81,7 +83,7 @@ export default function HomePage() {
 
       {/* ── Editorial promo strip ───────────────────────────── */}
       <AnimateIn>
-        <section aria-label="Promotional offer" className="bg-brand-900 py-20 text-center">
+        <section aria-label="Promotional offer" className="bg-brand-900 dark:bg-brand-900 py-20 text-center">
           <div className="container-xl">
             <span className="eyebrow text-gold-500">Limited Time</span>
             <h2 className="mt-4 font-serif text-3xl font-semibold text-white sm:text-4xl">
@@ -98,17 +100,17 @@ export default function HomePage() {
       </AnimateIn>
 
       {/* ── Bestsellers ─────────────────────────────────────── */}
-      <section aria-labelledby="bestsellers-heading" className="bg-cream-50 py-24">
+      <section aria-labelledby="bestsellers-heading" className="bg-cream-50 dark:bg-brand-950 py-24">
         <div className="container-xl">
           <AnimateIn>
             <div className="mb-12 flex items-end justify-between">
               <div>
                 <span className="eyebrow">Most Loved</span>
-                <h2 id="bestsellers-heading" className="section-title mt-3">Bestsellers in Nepal</h2>
+                <h2 id="bestsellers-heading" className="section-title mt-3 dark:text-white">Bestsellers in Nepal</h2>
               </div>
               <Link
                 href="/products"
-                className="hidden text-[10px] font-medium uppercase tracking-[0.2em] text-brand-400 underline-offset-4 transition-colors hover:text-brand-900 hover:underline sm:block"
+                className="hidden text-[10px] font-medium uppercase tracking-[0.2em] text-brand-400 underline-offset-4 transition-colors hover:text-brand-900 dark:hover:text-white hover:underline sm:block"
               >
                 View all →
               </Link>
