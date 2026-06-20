@@ -1,33 +1,11 @@
-'use client';
+export const dynamic = 'force-dynamic';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import type { Product } from '@/lib/types';
+import { getProducts } from '@/lib/db';
+import DeleteProductButton from '@/components/admin/DeleteProductButton';
 
 export default function AdminProductsPage() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [search, setSearch] = useState('');
-  const [deleting, setDeleting] = useState<string | null>(null);
-
-  useEffect(() => {
-    fetch('/api/admin/products').then((r) => r.json()).then(setProducts);
-  }, []);
-
-  async function handleDelete(id: string, name: string) {
-    if (!confirm(`Delete "${name}"? This cannot be undone.`)) return;
-    setDeleting(id);
-    await fetch(`/api/admin/products/${id}`, { method: 'DELETE' });
-    setProducts((prev) => prev.filter((p) => p.id !== id));
-    setDeleting(null);
-  }
-
-  const filtered = products.filter(
-    (p) =>
-      !search ||
-      p.name.toLowerCase().includes(search.toLowerCase()) ||
-      p.sku.toLowerCase().includes(search.toLowerCase()) ||
-      p.categorySlug.includes(search.toLowerCase())
-  );
+  const products = getProducts();
 
   return (
     <div className="p-6 space-y-5">
@@ -44,19 +22,6 @@ export default function AdminProductsPage() {
         </Link>
       </div>
 
-      <div className="relative">
-        <svg className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-        </svg>
-        <input
-          type="search"
-          placeholder="Search by name, SKU, or category…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-sm rounded-xl border border-white/10 bg-[#161616] py-2.5 pl-9 pr-4 text-sm text-white placeholder-gray-600 focus:border-amber-500/50 focus:outline-none"
-        />
-      </div>
-
       <div className="overflow-hidden rounded-xl border border-white/5">
         <table className="w-full text-sm">
           <thead className="border-b border-white/5 bg-[#161616]">
@@ -70,8 +35,8 @@ export default function AdminProductsPage() {
             </tr>
           </thead>
           <tbody className="divide-y divide-white/5 bg-[#111111]">
-            {filtered.map((p) => (
-              <tr key={p.id} className="transition-colors hover:bg-white/3">
+            {products.map((p) => (
+              <tr key={p.id} className="transition-colors hover:bg-white/[0.03]">
                 <td className="px-4 py-3">
                   <p className="font-medium text-white">{p.name}</p>
                   <p className="text-xs text-gray-600">{p.sku}</p>
@@ -105,21 +70,15 @@ export default function AdminProductsPage() {
                     >
                       Edit
                     </Link>
-                    <button
-                      onClick={() => handleDelete(p.id, p.name)}
-                      disabled={deleting === p.id}
-                      className="rounded-lg px-3 py-1.5 text-xs font-medium text-red-400 transition-colors hover:bg-red-500/10 disabled:opacity-50"
-                    >
-                      {deleting === p.id ? '…' : 'Delete'}
-                    </button>
+                    <DeleteProductButton id={p.id} name={p.name} />
                   </div>
                 </td>
               </tr>
             ))}
-            {filtered.length === 0 && (
+            {products.length === 0 && (
               <tr>
                 <td colSpan={6} className="px-4 py-16 text-center text-gray-600">
-                  {search ? 'No products match your search.' : 'No products yet.'}
+                  No products yet. Add your first product.
                 </td>
               </tr>
             )}

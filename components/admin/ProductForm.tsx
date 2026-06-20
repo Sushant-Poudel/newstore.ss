@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import type { Product } from '@/lib/types';
 
 interface Props {
@@ -36,7 +35,6 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 const INPUT = 'w-full rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder-gray-600 focus:border-amber-500 focus:outline-none';
 
 export default function ProductForm({ initial = {}, mode }: Props) {
-  const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
 
@@ -104,8 +102,8 @@ export default function ProductForm({ initial = {}, mode }: Props) {
 
     setSaving(false);
     if (res.ok) {
-      router.refresh();
-      router.push('/admin/products');
+      // Full navigation so the server-rendered products list re-reads from disk
+      window.location.href = '/admin/products';
     } else {
       const data = await res.json();
       setError(data.error ?? 'Something went wrong.');
@@ -255,7 +253,7 @@ export default function ProductForm({ initial = {}, mode }: Props) {
       <div className="flex items-center justify-end gap-3 border-t border-gray-800 pt-6">
         <button
           type="button"
-          onClick={() => router.push('/admin/products')}
+          onClick={() => { window.location.href = '/admin/products'; }}
           className="rounded border border-gray-700 px-5 py-2 text-sm text-gray-300 transition-colors hover:border-gray-500 hover:text-white"
         >
           Cancel
