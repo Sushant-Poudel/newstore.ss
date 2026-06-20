@@ -6,7 +6,6 @@
     "description": "Premium leather sneakers perfect for running and casual wear. Lightweight sole with excellent grip.",
     "longDescription": "Crafted from top-grain genuine leather, these running sneakers combine style and performance. The cushioned insole provides all-day comfort while the rubber outsole delivers excellent traction on any surface. Available in multiple sizes to suit every foot.",
     "price": 5500,
-    "originalPrice": 7200,
     "category": "Shoes",
     "categorySlug": "shoes",
     "image": "https://placehold.co/600x600/0f172a/ffffff?text=Sneakers",
@@ -34,7 +33,9 @@
     "brand": "TrekStyle",
     "sku": "SH-001-LRS",
     "isFeatured": true,
-    "isBestseller": true
+    "isBestseller": false,
+    "isNew": false,
+    "originalPrice": 7200
   },
   {
     "id": "p-2",
@@ -286,7 +287,7 @@
     "slug": "crossbody-mini-bag",
     "name": "Crossbody Mini Bag",
     "description": "Compact vegan-leather crossbody bag with adjustable strap. Fits phone, cards, and keys.",
-    "longDescription": "This chic mini crossbody bag is crafted from cruelty-free vegan leather with a gold-tone chain and adjustable nylon strap. It fits a smartphone, cards, and keys — perfect for a night out or a quick grocery run.",
+    "longDescription": "This chic mini crossbody bag is crafted from cruelty-free vegan leather with a gold-tone chain and adjustable nylon strap. It fits a smartphone, cards, and keys \u2014 perfect for a night out or a quick grocery run.",
     "price": 2800,
     "originalPrice": 3500,
     "category": "Bags",
@@ -322,7 +323,7 @@
     "slug": "gold-plated-necklace-set",
     "name": "Gold Plated Necklace Set",
     "description": "18K gold-plated layered necklace set with a pendant. Comes in a premium gift box.",
-    "longDescription": "This elegant layered necklace set features 18K gold plating over brass, ensuring long-lasting shine. It includes two complementary chains — a delicate 16\" and a pendant 18\" — that can be worn together or separately. Tarnish-resistant and nickel-free.",
+    "longDescription": "This elegant layered necklace set features 18K gold plating over brass, ensuring long-lasting shine. It includes two complementary chains \u2014 a delicate 16\" and a pendant 18\" \u2014 that can be worn together or separately. Tarnish-resistant and nickel-free.",
     "price": 3200,
     "originalPrice": 4500,
     "category": "Jewelry",
@@ -633,27 +634,5 @@
     "brand": "SunShield",
     "sku": "SG-003-PSS",
     "isBestseller": true
-  },
-  {
-    "id": "test-123",
-    "slug": "test-product",
-    "name": "Test",
-    "description": "desc",
-    "longDescription": "long",
-    "price": 100,
-    "category": "Shoes",
-    "categorySlug": "shoes",
-    "image": "https://example.com/img.jpg",
-    "images": [],
-    "rating": 4.5,
-    "reviewCount": 0,
-    "stock": 10,
-    "tags": [],
-    "features": [],
-    "brand": "Test",
-    "sku": "TEST-001",
-    "isFeatured": false,
-    "isBestseller": false,
-    "isNew": false
   }
 ]
