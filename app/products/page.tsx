@@ -13,8 +13,16 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/products` },
 };
 
+const PRICE_RANGES = [
+  { label: 'All Prices', min: 0, max: Infinity },
+  { label: 'Under NPR 2,000', min: 0, max: 2000 },
+  { label: 'NPR 2,000–5,000', min: 2000, max: 5000 },
+  { label: 'NPR 5,000–10,000', min: 5000, max: 10000 },
+  { label: 'NPR 10,000+', min: 10000, max: Infinity },
+];
+
 interface Props {
-  searchParams: { search?: string; category?: string; sort?: string };
+  searchParams: { search?: string; category?: string; sort?: string; price?: string };
 }
 
 const SORT_OPTIONS = [
@@ -31,6 +39,8 @@ export default function ProductsPage({ searchParams }: Props) {
   const search = searchParams.search?.toLowerCase() ?? '';
   const categoryFilter = searchParams.category ?? '';
   const sort = searchParams.sort ?? '';
+  const priceKey = searchParams.price ?? '';
+  const priceRange = PRICE_RANGES.find((r) => r.label === decodeURIComponent(priceKey)) ?? PRICE_RANGES[0];
 
   let filtered = products.filter((p) => {
     const matchSearch =
@@ -39,7 +49,8 @@ export default function ProductsPage({ searchParams }: Props) {
       p.description.toLowerCase().includes(search) ||
       p.tags.some((t) => t.includes(search));
     const matchCategory = !categoryFilter || p.categorySlug === categoryFilter;
-    return matchSearch && matchCategory;
+    const matchPrice = p.price >= priceRange.min && p.price < priceRange.max;
+    return matchSearch && matchCategory && matchPrice;
   });
 
   if (sort === 'price-asc')  filtered = [...filtered].sort((a, b) => a.price - b.price);
@@ -107,39 +118,68 @@ export default function ProductsPage({ searchParams }: Props) {
       <div className="container-xl py-10">
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* ── Sidebar ──────────────────────────────── */}
-          <aside className="w-full shrink-0 lg:w-48" aria-label="Filter by category">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-500 mb-3">
-              Category
-            </p>
-            <ul className="space-y-0.5">
-              <li>
-                <a
-                  href={`/products${sort ? `?sort=${sort}` : ''}`}
-                  className={`block py-2 text-sm transition-colors ${
-                    !categoryFilter
-                      ? 'font-semibold text-brand-900 dark:text-white underline underline-offset-2'
-                      : 'text-brand-500 hover:text-brand-900 dark:hover:text-white'
-                  }`}
-                >
-                  All Categories
-                </a>
-              </li>
-              {categories.map((cat) => (
-                <li key={cat.slug}>
+          <aside className="w-full shrink-0 lg:w-48 space-y-8" aria-label="Filters">
+            {/* Category */}
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-500 mb-3">
+                Category
+              </p>
+              <ul className="space-y-0.5">
+                <li>
                   <a
-                    href={`/products?category=${cat.slug}${sort ? `&sort=${sort}` : ''}`}
-                    className={`flex items-center justify-between py-2 text-sm transition-colors ${
-                      categoryFilter === cat.slug
+                    href={`/products${sort ? `?sort=${sort}` : ''}${priceKey ? `${sort ? '&' : '?'}price=${encodeURIComponent(priceKey)}` : ''}`}
+                    className={`block py-2 text-sm transition-colors ${
+                      !categoryFilter
                         ? 'font-semibold text-brand-900 dark:text-white underline underline-offset-2'
                         : 'text-brand-500 hover:text-brand-900 dark:hover:text-white'
                     }`}
                   >
-                    <span>{cat.name}</span>
-                    <span className="text-[11px] text-brand-300 dark:text-brand-700">{cat.productCount}</span>
+                    All Categories
                   </a>
                 </li>
-              ))}
-            </ul>
+                {categories.map((cat) => (
+                  <li key={cat.slug}>
+                    <a
+                      href={`/products?category=${cat.slug}${sort ? `&sort=${sort}` : ''}${priceKey ? `&price=${encodeURIComponent(priceKey)}` : ''}`}
+                      className={`flex items-center justify-between py-2 text-sm transition-colors ${
+                        categoryFilter === cat.slug
+                          ? 'font-semibold text-brand-900 dark:text-white underline underline-offset-2'
+                          : 'text-brand-500 hover:text-brand-900 dark:hover:text-white'
+                      }`}
+                    >
+                      <span>{cat.name}</span>
+                      <span className="text-[11px] text-brand-300 dark:text-brand-700">{cat.productCount}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Price range */}
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-brand-500 mb-3">
+                Price
+              </p>
+              <ul className="space-y-0.5">
+                {PRICE_RANGES.map((range) => {
+                  const active = range.label === priceRange.label;
+                  return (
+                    <li key={range.label}>
+                      <a
+                        href={`/products?${categoryFilter ? `category=${categoryFilter}&` : ''}${sort ? `sort=${sort}&` : ''}${range.min > 0 || range.max !== Infinity ? `price=${encodeURIComponent(range.label)}` : ''}`}
+                        className={`block py-2 text-sm transition-colors ${
+                          active
+                            ? 'font-semibold text-brand-900 dark:text-white underline underline-offset-2'
+                            : 'text-brand-500 hover:text-brand-900 dark:hover:text-white'
+                        }`}
+                      >
+                        {range.label}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
           </aside>
 
           {/* ── Product grid ─────────────────────────── */}

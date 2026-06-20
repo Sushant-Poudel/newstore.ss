@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/context/ToastContext';
+import { useWishlist } from '@/context/WishlistContext';
 import type { Product } from '@/lib/types';
 import { formatPrice, getDiscount } from '@/lib/constants';
 import ProductCard from '@/components/ProductCard';
@@ -17,19 +18,38 @@ interface Props {
   related: Product[];
 }
 
+const SIZE_OPTIONS: Record<string, string[]> = {
+  shoes: ['38', '39', '40', '41', '42', '43', '44', '45'],
+  clothing: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+};
+
 export default function ProductDetailClient({ product, related }: Props) {
   const { addToCart } = useCart();
   const { showToast } = useToast();
+  const { toggle, isWishlisted } = useWishlist();
   const router = useRouter();
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
+  const [sizeError, setSizeError] = useState(false);
 
+  const wishlisted = isWishlisted(product.id);
+  const sizes = SIZE_OPTIONS[product.categorySlug] ?? [];
   const discount = product.originalPrice
     ? getDiscount(product.price, product.originalPrice)
     : 0;
 
+  function requireSize(): boolean {
+    if (sizes.length > 0 && !selectedSize) {
+      setSizeError(true);
+      return false;
+    }
+    return true;
+  }
+
   function handleAddToCart() {
+    if (!requireSize()) return;
     addToCart(product, qty);
     showToast(product.name, product.image, qty);
     setAdded(true);
@@ -37,6 +57,7 @@ export default function ProductDetailClient({ product, related }: Props) {
   }
 
   function handleBuyNow() {
+    if (!requireSize()) return;
     addToCart(product, qty);
     router.push('/checkout');
   }
@@ -152,6 +173,38 @@ export default function ProductDetailClient({ product, related }: Props) {
             {/* Description */}
             <p className="text-sm leading-relaxed text-brand-600 dark:text-brand-400">{product.description}</p>
 
+            {/* Size selector */}
+            {sizes.length > 0 && (
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-brand-600 dark:text-brand-500">
+                    Size {selectedSize && <span className="text-brand-900 dark:text-white">— {selectedSize}</span>}
+                  </span>
+                  <button className="text-[10px] underline text-brand-400 hover:text-brand-900 dark:hover:text-white transition-colors">
+                    Size Guide
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {sizes.map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => { setSelectedSize(size); setSizeError(false); }}
+                      className={`h-10 min-w-[2.5rem] px-3 border text-sm font-medium transition-all ${
+                        selectedSize === size
+                          ? 'border-brand-900 bg-brand-900 text-white dark:border-gold-500 dark:bg-gold-500 dark:text-brand-950'
+                          : 'border-cream-200 dark:border-brand-700 text-brand-700 dark:text-brand-400 hover:border-brand-900 dark:hover:border-gold-600'
+                      }`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+                {sizeError && (
+                  <p className="mt-1.5 text-xs text-red-500">Please select a size before adding to bag.</p>
+                )}
+              </div>
+            )}
+
             {/* Stock */}
             <div className="flex items-center gap-2">
               <div
@@ -210,11 +263,12 @@ export default function ProductDetailClient({ product, related }: Props) {
                 {product.stock === 0 ? 'Out of Stock' : 'Buy Now'}
               </button>
 
-              {/* Add to bag */}
+              {/* Add to bag + Wishlist */}
+              <div className="flex gap-2">
               <button
                 onClick={handleAddToCart}
                 disabled={product.stock === 0}
-                className={`btn-outline w-full justify-center py-3.5 text-sm transition-all ${
+                className={`btn-outline flex-1 justify-center py-3.5 text-sm transition-all ${
                   added ? 'border-emerald-600 text-emerald-700 dark:border-emerald-700 dark:text-emerald-400' : ''
                 }`}
               >
@@ -234,6 +288,20 @@ export default function ProductDetailClient({ product, related }: Props) {
                   </>
                 )}
               </button>
+              <button
+                onClick={() => toggle(product)}
+                aria-label={wishlisted ? 'Remove from wishlist' : 'Save to wishlist'}
+                className={`flex h-[50px] w-[50px] shrink-0 items-center justify-center border transition-all ${
+                  wishlisted
+                    ? 'border-red-300 dark:border-red-800 text-red-500'
+                    : 'border-cream-200 dark:border-brand-700 text-brand-400 dark:text-brand-600 hover:border-red-300 dark:hover:border-red-800 hover:text-red-500'
+                }`}
+              >
+                <svg className={`h-5 w-5 ${wishlisted ? 'fill-current' : 'fill-none'}`} stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </button>
+              </div>
             </div>
 
             {/* Key features */}

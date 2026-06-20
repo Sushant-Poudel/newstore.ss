@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import ScrollToTop from '@/components/ScrollToTop';
 
 interface Props {
   children: React.ReactNode;
@@ -20,6 +21,7 @@ export default function StoreShell({ children, header, footer }: Props) {
       {header}
       <main className="flex-1">{children}</main>
       {footer}
+      <ScrollToTop />
     </>
   );
 }

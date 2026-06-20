@@ -5,13 +5,16 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/context/ToastContext';
+import { useWishlist } from '@/context/WishlistContext';
 import type { Product } from '@/lib/types';
 import { formatPrice, getDiscount } from '@/lib/constants';
 
 export default function ProductCard({ product }: { product: Product }) {
   const { addToCart } = useCart();
   const { showToast } = useToast();
+  const { toggle, isWishlisted } = useWishlist();
   const [adding, setAdding] = useState(false);
+  const wishlisted = isWishlisted(product.id);
 
   const discount = product.originalPrice
     ? getDiscount(product.price, product.originalPrice)
@@ -44,6 +47,17 @@ export default function ProductCard({ product }: { product: Product }) {
             </span>
           )}
         </div>
+
+        {/* Wishlist */}
+        <button
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(product); }}
+          aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+          className="absolute right-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/80 dark:bg-brand-950/80 backdrop-blur-sm transition-all hover:scale-110"
+        >
+          <svg className={`h-3.5 w-3.5 transition-colors ${wishlisted ? 'fill-red-500 text-red-500' : 'fill-none text-brand-400 dark:text-brand-500'}`} stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+          </svg>
+        </button>
 
         <Link href={`/products/${product.slug}`} aria-label={product.name}>
           <div className="relative aspect-square w-full">
