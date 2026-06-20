@@ -31,8 +31,34 @@ export default function PaymentPage() {
 
   if (!shipping || items.length === 0) return null;
 
-  function handleConfirmOrder() {
+  async function handleConfirmOrder() {
     if (!settings) return;
+
+    // Save order to database
+    await fetch('/api/admin/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        customer: {
+          name: shipping!.name,
+          phone: shipping!.phone,
+          region: shipping!.region,
+          address: shipping!.address,
+          landmark: shipping!.landmark ?? '',
+        },
+        items: items.map((i) => ({
+          productId: i.product.id,
+          name: i.product.name,
+          image: i.product.image,
+          price: i.product.price,
+          quantity: i.quantity,
+        })),
+        subtotal: totalPrice,
+        delivery,
+        total: grandTotal,
+      }),
+    });
+
     const msg = encodeURIComponent(
       `*New Order — StyleNepal* 🛍\n\n` +
       `*Customer:*\n` +

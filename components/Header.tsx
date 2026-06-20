@@ -65,73 +65,73 @@ export default function Header() {
       {/* Main header */}
       <div className="border-b border-cream-200 dark:border-brand-900">
         <div className="container-xl">
-          <div className="flex h-[60px] items-center justify-between gap-4">
+          {/* 3-col grid: nav-left | logo | nav-right+icons */}
+          <div className="grid h-[60px] grid-cols-[1fr_auto_1fr] items-center gap-2">
 
-            {/* Mobile: hamburger */}
-            <button
-              aria-label="Toggle menu"
-              aria-expanded={menuOpen}
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] text-brand-700 dark:text-brand-400 lg:hidden"
-            >
-              <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? 'translate-y-[6px] rotate-45' : ''}`} />
-              <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-              <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? '-translate-y-[6px] -rotate-45' : ''}`} />
-            </button>
+            {/* Col 1: mobile hamburger OR desktop left nav */}
+            <div className="flex items-center">
+              <button
+                aria-label="Toggle menu"
+                aria-expanded={menuOpen}
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="flex h-8 w-8 flex-col items-center justify-center gap-[5px] text-brand-700 dark:text-brand-400 lg:hidden"
+              >
+                <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? 'translate-y-[6px] rotate-45' : ''}`} />
+                <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+                <span className={`block h-px w-5 bg-current transition-all duration-300 ${menuOpen ? '-translate-y-[6px] -rotate-45' : ''}`} />
+              </button>
+              <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary navigation left">
+                {navLeft.map((link) => (
+                  <Link key={link.href} href={link.href} className={linkClass(link.href)}>
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+            </div>
 
-            {/* Desktop nav left */}
-            <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary navigation left">
-              {navLeft.map((link) => (
-                <Link key={link.href} href={link.href} className={linkClass(link.href)}>
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Logo — centered */}
-            <Link href="/" className="absolute left-1/2 -translate-x-1/2">
-              <span className="font-serif text-[1.35rem] font-semibold tracking-wide text-brand-900 dark:text-white">
+            {/* Col 2: Logo — always centered */}
+            <Link href="/">
+              <span className="font-serif text-[1.35rem] font-semibold tracking-wide text-brand-900 dark:text-white whitespace-nowrap">
                 Style<span className="text-gold-600 dark:text-gold-500">Nepal</span>
               </span>
             </Link>
 
-            {/* Desktop nav right */}
-            <nav className="hidden items-center gap-8 lg:flex" aria-label="Primary navigation right">
-              {navRight.map((link) => (
-                <Link key={link.href} href={link.href} className={linkClass(link.href)}>
-                  {link.label}
+            {/* Col 3: desktop right nav + icons */}
+            <div className="flex items-center justify-end gap-6">
+              <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary navigation right">
+                {navRight.map((link) => (
+                  <Link key={link.href} href={link.href} className={linkClass(link.href)}>
+                    {link.label}
+                  </Link>
+                ))}
+              </nav>
+
+              <div className="flex items-center gap-4">
+                <ThemeToggle />
+                <button
+                  aria-label="Search"
+                  onClick={() => setSearchOpen(!searchOpen)}
+                  className="text-brand-400 transition-colors hover:text-brand-900 dark:hover:text-white"
+                >
+                  <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
+                <Link
+                  href="/cart"
+                  aria-label={`Shopping bag, ${totalItems} items`}
+                  className="relative text-brand-400 transition-colors hover:text-brand-900 dark:hover:text-white"
+                >
+                  <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                  {totalItems > 0 && (
+                    <span className="absolute -right-1.5 -top-1.5 flex h-[14px] w-[14px] items-center justify-center bg-brand-900 dark:bg-gold-600 text-[9px] font-bold text-white dark:text-brand-950">
+                      {totalItems > 9 ? '9+' : totalItems}
+                    </span>
+                  )}
                 </Link>
-              ))}
-            </nav>
-
-            {/* Right icons */}
-            <div className="flex items-center gap-5">
-              <ThemeToggle />
-
-              <button
-                aria-label="Search"
-                onClick={() => setSearchOpen(!searchOpen)}
-                className="text-brand-400 transition-colors hover:text-brand-900 dark:hover:text-white"
-              >
-                <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </button>
-
-              <Link
-                href="/cart"
-                aria-label={`Shopping bag, ${totalItems} items`}
-                className="relative text-brand-400 transition-colors hover:text-brand-900 dark:hover:text-white"
-              >
-                <svg className="h-[18px] w-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
-                {totalItems > 0 && (
-                  <span className="absolute -right-1.5 -top-1.5 flex h-[14px] w-[14px] items-center justify-center bg-brand-900 dark:bg-gold-600 text-[9px] font-bold text-white dark:text-brand-950">
-                    {totalItems > 9 ? '9+' : totalItems}
-                  </span>
-                )}
-              </Link>
+              </div>
             </div>
           </div>
 

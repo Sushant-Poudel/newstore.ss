@@ -2,6 +2,31 @@ import fs from 'fs';
 import path from 'path';
 import type { Product, Category } from './types';
 
+export interface OrderItem {
+  productId: string;
+  name: string;
+  image: string;
+  price: number;
+  quantity: number;
+}
+
+export interface Order {
+  id: string;
+  createdAt: string;
+  status: 'pending' | 'confirmed' | 'completed' | 'cancelled';
+  customer: {
+    name: string;
+    phone: string;
+    region: string;
+    address: string;
+    landmark: string;
+  };
+  items: OrderItem[];
+  subtotal: number;
+  delivery: number;
+  total: number;
+}
+
 export interface SiteSettings {
   siteName: string;
   siteUrl: string;
@@ -66,4 +91,24 @@ export function saveCategories(categories: Category[]): void {
 
 export function saveSettings(settings: SiteSettings): void {
   writeJSON('settings.json', settings);
+}
+
+export function getOrders(): Order[] {
+  try { return readJSON<Order[]>('orders.json'); } catch { return []; }
+}
+
+export function saveOrders(orders: Order[]): void {
+  writeJSON('orders.json', orders);
+}
+
+export function createOrder(order: Omit<Order, 'id' | 'createdAt' | 'status'>): Order {
+  const orders = getOrders();
+  const newOrder: Order = {
+    ...order,
+    id: Math.random().toString(36).slice(2, 10),
+    createdAt: new Date().toISOString(),
+    status: 'pending',
+  };
+  saveOrders([newOrder, ...orders]);
+  return newOrder;
 }
