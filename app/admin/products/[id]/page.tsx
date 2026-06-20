@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { notFound } from 'next/navigation';
 import { getProducts } from '@/lib/data';
 import ProductForm from '@/components/admin/ProductForm';

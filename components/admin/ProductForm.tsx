@@ -104,6 +104,7 @@ export default function ProductForm({ initial = {}, mode }: Props) {
 
     setSaving(false);
     if (res.ok) {
+      router.refresh();
       router.push('/admin/products');
     } else {
       const data = await res.json();
