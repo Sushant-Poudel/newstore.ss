@@ -18,8 +18,19 @@
     "rating": 4.7,
     "reviewCount": 128,
     "stock": 45,
-    "tags": ["sneakers", "running", "leather", "casual", "shoes"],
-    "features": ["Genuine leather upper", "Rubber outsole", "Cushioned insole", "Breathable lining"],
+    "tags": [
+      "sneakers",
+      "running",
+      "leather",
+      "casual",
+      "shoes"
+    ],
+    "features": [
+      "Genuine leather upper",
+      "Rubber outsole",
+      "Cushioned insole",
+      "Breathable lining"
+    ],
     "brand": "TrekStyle",
     "sku": "SH-001-LRS",
     "isFeatured": true,
@@ -43,8 +54,19 @@
     "rating": 4.5,
     "reviewCount": 87,
     "stock": 30,
-    "tags": ["boots", "heels", "women", "fashion", "shoes"],
-    "features": ["7cm block heel", "Faux suede", "Side zipper", "Non-slip sole"],
+    "tags": [
+      "boots",
+      "heels",
+      "women",
+      "fashion",
+      "shoes"
+    ],
+    "features": [
+      "7cm block heel",
+      "Faux suede",
+      "Side zipper",
+      "Non-slip sole"
+    ],
     "brand": "GlacierFemme",
     "sku": "SH-002-WBB",
     "isNew": true
@@ -66,8 +88,19 @@
     "rating": 4.8,
     "reviewCount": 213,
     "stock": 80,
-    "tags": ["sandals", "traditional", "nepali", "handmade", "leather"],
-    "features": ["Handcrafted", "Buffalo leather", "Artisan made", "Breathable"],
+    "tags": [
+      "sandals",
+      "traditional",
+      "nepali",
+      "handmade",
+      "leather"
+    ],
+    "features": [
+      "Handcrafted",
+      "Buffalo leather",
+      "Artisan made",
+      "Breathable"
+    ],
     "brand": "Bhaktapur Crafts",
     "sku": "SH-003-TNS",
     "isBestseller": true
@@ -90,8 +123,19 @@
     "rating": 4.6,
     "reviewCount": 195,
     "stock": 120,
-    "tags": ["shirt", "casual", "men", "cotton", "clothing"],
-    "features": ["100% cotton", "Pre-washed", "Machine washable", "5 colour options"],
+    "tags": [
+      "shirt",
+      "casual",
+      "men",
+      "cotton",
+      "clothing"
+    ],
+    "features": [
+      "100% cotton",
+      "Pre-washed",
+      "Machine washable",
+      "5 colour options"
+    ],
     "brand": "KathmanduThreads",
     "sku": "CL-001-MCS",
     "isFeatured": true,
@@ -114,8 +158,20 @@
     "rating": 4.9,
     "reviewCount": 302,
     "stock": 60,
-    "tags": ["kurta", "set", "women", "festival", "floral", "nepali"],
-    "features": ["Premium georgette", "Floral embroidery", "Palazzo pants included", "Festival-ready"],
+    "tags": [
+      "kurta",
+      "set",
+      "women",
+      "festival",
+      "floral",
+      "nepali"
+    ],
+    "features": [
+      "Premium georgette",
+      "Floral embroidery",
+      "Palazzo pants included",
+      "Festival-ready"
+    ],
     "brand": "NepaliStitch",
     "sku": "CL-002-WFK",
     "isNew": true,
@@ -139,8 +195,19 @@
     "rating": 4.4,
     "reviewCount": 141,
     "stock": 55,
-    "tags": ["denim", "jacket", "unisex", "casual", "layering"],
-    "features": ["Medium wash denim", "Reinforced stitching", "Brass buttons", "Unisex fit"],
+    "tags": [
+      "denim",
+      "jacket",
+      "unisex",
+      "casual",
+      "layering"
+    ],
+    "features": [
+      "Medium wash denim",
+      "Reinforced stitching",
+      "Brass buttons",
+      "Unisex fit"
+    ],
     "brand": "KathmanduThreads",
     "sku": "CL-003-DJU"
   },
@@ -162,8 +229,19 @@
     "rating": 4.8,
     "reviewCount": 178,
     "stock": 35,
-    "tags": ["tote", "leather", "bag", "women", "work"],
-    "features": ["Full-grain leather", "Central zip", "Interior pockets", "Double handles"],
+    "tags": [
+      "tote",
+      "leather",
+      "bag",
+      "women",
+      "work"
+    ],
+    "features": [
+      "Full-grain leather",
+      "Central zip",
+      "Interior pockets",
+      "Double handles"
+    ],
     "brand": "KathLeather",
     "sku": "BG-001-GLT",
     "isFeatured": true,
@@ -186,8 +264,19 @@
     "rating": 4.6,
     "reviewCount": 254,
     "stock": 90,
-    "tags": ["backpack", "laptop", "usb", "anti-theft", "student"],
-    "features": ["25L capacity", "USB charging", "Anti-theft pocket", "Laptop sleeve 15.6\""],
+    "tags": [
+      "backpack",
+      "laptop",
+      "usb",
+      "anti-theft",
+      "student"
+    ],
+    "features": [
+      "25L capacity",
+      "USB charging",
+      "Anti-theft pocket",
+      "Laptop sleeve 15.6\""
+    ],
     "brand": "UrbanGear",
     "sku": "BG-002-UBP",
     "isBestseller": true
@@ -210,8 +299,20 @@
     "rating": 4.5,
     "reviewCount": 112,
     "stock": 70,
-    "tags": ["crossbody", "mini", "bag", "women", "vegan", "evening"],
-    "features": ["Vegan leather", "Adjustable strap", "Gold-tone hardware", "Card slots"],
+    "tags": [
+      "crossbody",
+      "mini",
+      "bag",
+      "women",
+      "vegan",
+      "evening"
+    ],
+    "features": [
+      "Vegan leather",
+      "Adjustable strap",
+      "Gold-tone hardware",
+      "Card slots"
+    ],
     "brand": "GlacierFemme",
     "sku": "BG-003-CMB",
     "isNew": true
@@ -234,8 +335,20 @@
     "rating": 4.7,
     "reviewCount": 189,
     "stock": 50,
-    "tags": ["necklace", "gold", "jewelry", "gift", "women", "layered"],
-    "features": ["18K gold plated", "Tarnish-resistant", "Nickel-free", "Gift box included"],
+    "tags": [
+      "necklace",
+      "gold",
+      "jewelry",
+      "gift",
+      "women",
+      "layered"
+    ],
+    "features": [
+      "18K gold plated",
+      "Tarnish-resistant",
+      "Nickel-free",
+      "Gift box included"
+    ],
     "brand": "AuraGold",
     "sku": "JW-001-GPN",
     "isFeatured": true,
@@ -258,8 +371,19 @@
     "rating": 4.8,
     "reviewCount": 231,
     "stock": 80,
-    "tags": ["earrings", "silver", "chandelier", "sterling", "nepali"],
-    "features": ["925 sterling silver", "Filigree work", "Lightweight", "Traditional design"],
+    "tags": [
+      "earrings",
+      "silver",
+      "chandelier",
+      "sterling",
+      "nepali"
+    ],
+    "features": [
+      "925 sterling silver",
+      "Filigree work",
+      "Lightweight",
+      "Traditional design"
+    ],
     "brand": "AuraGold",
     "sku": "JW-002-SCE",
     "isNew": true
@@ -281,8 +405,20 @@
     "rating": 4.9,
     "reviewCount": 405,
     "stock": 200,
-    "tags": ["bangles", "traditional", "nepali", "teej", "festival", "lacquer"],
-    "features": ["Set of 12", "Hand-painted", "Festival-ready", "One-size-fits-most"],
+    "tags": [
+      "bangles",
+      "traditional",
+      "nepali",
+      "teej",
+      "festival",
+      "lacquer"
+    ],
+    "features": [
+      "Set of 12",
+      "Hand-painted",
+      "Festival-ready",
+      "One-size-fits-most"
+    ],
     "brand": "NepaliCrafts",
     "sku": "JW-003-TBP",
     "isBestseller": true
@@ -305,8 +441,19 @@
     "rating": 4.7,
     "reviewCount": 143,
     "stock": 40,
-    "tags": ["watch", "minimalist", "leather", "quartz", "slim"],
-    "features": ["Japanese quartz", "Leather strap", "30m water-resistant", "Mineral glass"],
+    "tags": [
+      "watch",
+      "minimalist",
+      "leather",
+      "quartz",
+      "slim"
+    ],
+    "features": [
+      "Japanese quartz",
+      "Leather strap",
+      "30m water-resistant",
+      "Mineral glass"
+    ],
     "brand": "TimeCraft",
     "sku": "WT-001-MLW",
     "isFeatured": true
@@ -328,8 +475,19 @@
     "rating": 4.6,
     "reviewCount": 98,
     "stock": 25,
-    "tags": ["watch", "chronograph", "sports", "water-resistant", "hiking"],
-    "features": ["100m water-resistant", "Tachymeter bezel", "Luminous hands", "Silicone strap"],
+    "tags": [
+      "watch",
+      "chronograph",
+      "sports",
+      "water-resistant",
+      "hiking"
+    ],
+    "features": [
+      "100m water-resistant",
+      "Tachymeter bezel",
+      "Luminous hands",
+      "Silicone strap"
+    ],
     "brand": "TimeCraft",
     "sku": "WT-002-SCW"
   },
@@ -351,8 +509,20 @@
     "rating": 4.8,
     "reviewCount": 167,
     "stock": 35,
-    "tags": ["watch", "women", "rose gold", "crystal", "gift", "mesh"],
-    "features": ["32mm case", "CZ crystals", "Mesh bracelet", "Gift box included"],
+    "tags": [
+      "watch",
+      "women",
+      "rose gold",
+      "crystal",
+      "gift",
+      "mesh"
+    ],
+    "features": [
+      "32mm case",
+      "CZ crystals",
+      "Mesh bracelet",
+      "Gift box included"
+    ],
     "brand": "TimeCraft",
     "sku": "WT-003-WRG",
     "isNew": true,
@@ -376,8 +546,19 @@
     "rating": 4.6,
     "reviewCount": 219,
     "stock": 65,
-    "tags": ["sunglasses", "aviator", "uv400", "polarized", "classic"],
-    "features": ["UV400 protection", "Polarized lenses", "Stainless steel frame", "Adjustable nose pads"],
+    "tags": [
+      "sunglasses",
+      "aviator",
+      "uv400",
+      "polarized",
+      "classic"
+    ],
+    "features": [
+      "UV400 protection",
+      "Polarized lenses",
+      "Stainless steel frame",
+      "Adjustable nose pads"
+    ],
     "brand": "SunShield",
     "sku": "SG-001-CAV",
     "isBestseller": true
@@ -399,8 +580,20 @@
     "rating": 4.5,
     "reviewCount": 134,
     "stock": 75,
-    "tags": ["sunglasses", "cat-eye", "retro", "vintage", "fashion", "women"],
-    "features": ["Acetate frame", "Gradient lenses", "UV400 protection", "3 colour options"],
+    "tags": [
+      "sunglasses",
+      "cat-eye",
+      "retro",
+      "vintage",
+      "fashion",
+      "women"
+    ],
+    "features": [
+      "Acetate frame",
+      "Gradient lenses",
+      "UV400 protection",
+      "3 colour options"
+    ],
     "brand": "SunShield",
     "sku": "SG-002-CEF",
     "isNew": true
@@ -423,10 +616,44 @@
     "rating": 4.8,
     "reviewCount": 289,
     "stock": 55,
-    "tags": ["sunglasses", "sport", "polarized", "trekking", "outdoor", "hiking"],
-    "features": ["TR90 nylon frame", "Polarized lenses", "Rubber grip", "Wrap-around fit"],
+    "tags": [
+      "sunglasses",
+      "sport",
+      "polarized",
+      "trekking",
+      "outdoor",
+      "hiking"
+    ],
+    "features": [
+      "TR90 nylon frame",
+      "Polarized lenses",
+      "Rubber grip",
+      "Wrap-around fit"
+    ],
     "brand": "SunShield",
     "sku": "SG-003-PSS",
     "isBestseller": true
+  },
+  {
+    "id": "test-123",
+    "slug": "test-product",
+    "name": "Test",
+    "description": "desc",
+    "longDescription": "long",
+    "price": 100,
+    "category": "Shoes",
+    "categorySlug": "shoes",
+    "image": "https://example.com/img.jpg",
+    "images": [],
+    "rating": 4.5,
+    "reviewCount": 0,
+    "stock": 10,
+    "tags": [],
+    "features": [],
+    "brand": "Test",
+    "sku": "TEST-001",
+    "isFeatured": false,
+    "isBestseller": false,
+    "isNew": false
   }
 ]
