@@ -13,6 +13,7 @@ import ProductCard from '@/components/ProductCard';
 import Breadcrumb from '@/components/Breadcrumb';
 import AnimateIn from '@/components/AnimateIn';
 import RecentlyViewed, { trackView } from '@/components/RecentlyViewed';
+import ImageLightbox from '@/components/ImageLightbox';
 
 interface Props {
   product: Product;
@@ -32,6 +33,7 @@ export default function ProductDetailClient({ product, related }: Props) {
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [sizeError, setSizeError] = useState(false);
 
@@ -81,7 +83,18 @@ export default function ProductDetailClient({ product, related }: Props) {
       <div className="mt-8 grid gap-12 lg:grid-cols-2">
         {/* Images */}
         <div className="flex flex-col gap-3">
-          <div className="relative aspect-[4/5] overflow-hidden bg-cream-100 dark:bg-brand-900">
+          {lightboxOpen && (
+            <ImageLightbox
+              src={product.images[activeImage] ?? product.image}
+              alt={product.name}
+              onClose={() => setLightboxOpen(false)}
+            />
+          )}
+          <div
+            className="relative aspect-[4/5] overflow-hidden bg-cream-100 dark:bg-brand-900 cursor-zoom-in"
+            onClick={() => setLightboxOpen(true)}
+            title="Click to zoom"
+          >
             <Image
               src={product.images[activeImage] ?? product.image}
               alt={product.name}

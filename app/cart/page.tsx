@@ -2,14 +2,36 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
 import { formatPrice } from '@/lib/constants';
 
+const VALID_COUPONS: Record<string, { label: string; discount: number }> = {
+  'NEPAL10': { label: '10% off your order', discount: 0.10 },
+  'WELCOME': { label: '5% first-order discount', discount: 0.05 },
+};
+
 export default function CartPage() {
   const { items, totalItems, totalPrice, removeFromCart, updateQuantity, clearCart } = useCart();
+  const [coupon, setCoupon] = useState('');
+  const [appliedCoupon, setAppliedCoupon] = useState<string | null>(null);
+  const [couponError, setCouponError] = useState('');
 
+  const couponData = appliedCoupon ? VALID_COUPONS[appliedCoupon] : null;
+  const couponSaving = couponData ? Math.round(totalPrice * couponData.discount) : 0;
   const delivery = totalPrice >= 2000 ? 0 : 150;
-  const grandTotal = totalPrice + delivery;
+  const grandTotal = totalPrice - couponSaving + delivery;
+
+  function applyCoupon() {
+    const code = coupon.toUpperCase().trim();
+    if (VALID_COUPONS[code]) {
+      setAppliedCoupon(code);
+      setCouponError('');
+      setCoupon('');
+    } else {
+      setCouponError('Invalid coupon code.');
+    }
+  }
 
   if (items.length === 0) {
     return (
@@ -133,11 +155,52 @@ export default function CartPage() {
         <div className="h-fit border border-cream-200 dark:border-brand-800 bg-white dark:bg-brand-900 p-6">
           <h2 className="font-serif text-lg font-semibold text-brand-900 dark:text-white">Order Summary</h2>
 
+          {/* Coupon */}
+          <div className="mt-5">
+            {appliedCoupon && couponData ? (
+              <div className="flex items-center justify-between border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-900/20 px-3 py-2">
+                <div>
+                  <p className="text-[10px] font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">{appliedCoupon}</p>
+                  <p className="text-[11px] text-emerald-600 dark:text-emerald-500">{couponData.label}</p>
+                </div>
+                <button
+                  onClick={() => setAppliedCoupon(null)}
+                  className="text-[10px] text-emerald-600 dark:text-emerald-500 hover:text-red-500 transition-colors uppercase tracking-widest"
+                >
+                  Remove
+                </button>
+              </div>
+            ) : (
+              <div className="flex gap-2">
+                <input
+                  value={coupon}
+                  onChange={(e) => { setCoupon(e.target.value); setCouponError(''); }}
+                  placeholder="Coupon code"
+                  className="flex-1 border border-cream-300 dark:border-brand-700 bg-transparent px-3 py-2 text-xs text-brand-900 dark:text-white placeholder:text-brand-400 focus:border-brand-900 dark:focus:border-gold-600 focus:outline-none"
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); applyCoupon(); } }}
+                />
+                <button
+                  onClick={applyCoupon}
+                  className="shrink-0 border border-brand-900 dark:border-brand-600 px-4 py-2 text-[10px] font-medium uppercase tracking-widest text-brand-900 dark:text-brand-300 transition-colors hover:bg-brand-900 hover:text-white dark:hover:bg-white dark:hover:text-brand-950"
+                >
+                  Apply
+                </button>
+              </div>
+            )}
+            {couponError && <p className="mt-1 text-[11px] text-red-500">{couponError}</p>}
+          </div>
+
           <div className="mt-5 space-y-3">
             <div className="flex justify-between text-sm text-brand-600 dark:text-brand-400">
               <span>Subtotal</span>
               <span>{formatPrice(totalPrice)}</span>
             </div>
+            {couponSaving > 0 && (
+              <div className="flex justify-between text-sm text-emerald-600 dark:text-emerald-400">
+                <span>Coupon ({appliedCoupon})</span>
+                <span>-{formatPrice(couponSaving)}</span>
+              </div>
+            )}
             <div className="flex justify-between text-sm text-brand-600 dark:text-brand-400">
               <span>Delivery</span>
               {delivery === 0 ? (

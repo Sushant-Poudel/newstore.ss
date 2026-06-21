@@ -113,6 +113,24 @@ export default function HomePage() {
         </section>
       </AnimateIn>
 
+      {/* ── New Arrivals strip ── */}
+      <AnimateIn>
+        <section aria-label="New Arrivals" className="border-y border-cream-200 dark:border-brand-800 bg-white dark:bg-brand-950 py-10">
+          <div className="container-xl flex items-center justify-between">
+            <div>
+              <p className="text-[9px] font-medium uppercase tracking-[0.4em] text-gold-600">Just Landed</p>
+              <p className="mt-1 font-serif text-xl font-semibold text-brand-900 dark:text-white">New This Week</p>
+            </div>
+            <a
+              href="/new-arrivals"
+              className="inline-block border-b border-brand-900 dark:border-white pb-0.5 text-[11px] font-medium uppercase tracking-[0.22em] text-brand-900 dark:text-white transition-all hover:pb-1"
+            >
+              View New Arrivals
+            </a>
+          </div>
+        </section>
+      </AnimateIn>
+
       {/* ── Bestsellers ── */}
       <section aria-labelledby="bestsellers-heading" className="bg-white dark:bg-brand-950 py-20">
         <div className="container-xl">

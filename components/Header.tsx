@@ -9,6 +9,7 @@ import ThemeToggle from '@/components/ThemeToggle';
 
 const navLeft = [
   { href: '/products', label: 'Shop All' },
+  { href: '/new-arrivals', label: 'New Arrivals' },
   { href: '/category/shoes', label: 'Shoes' },
   { href: '/category/clothing', label: 'Clothing' },
   { href: '/category/bags', label: 'Bags' },
