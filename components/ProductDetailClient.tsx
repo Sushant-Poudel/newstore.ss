@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/context/ToastContext';
@@ -12,6 +12,7 @@ import { formatPrice, getDiscount } from '@/lib/constants';
 import ProductCard from '@/components/ProductCard';
 import Breadcrumb from '@/components/Breadcrumb';
 import AnimateIn from '@/components/AnimateIn';
+import RecentlyViewed, { trackView } from '@/components/RecentlyViewed';
 
 interface Props {
   product: Product;
@@ -36,6 +37,10 @@ export default function ProductDetailClient({ product, related }: Props) {
 
   const wishlisted = isWishlisted(product.id);
   const sizes = SIZE_OPTIONS[product.categorySlug] ?? [];
+
+  useEffect(() => {
+    trackView(product);
+  }, [product.id]); // eslint-disable-line react-hooks/exhaustive-deps
   const discount = product.originalPrice
     ? getDiscount(product.price, product.originalPrice)
     : 0;
@@ -353,6 +358,8 @@ export default function ProductDetailClient({ product, related }: Props) {
           </div>
         </section>
       )}
+
+      <RecentlyViewed excludeId={product.id} />
 
       {/* Sticky mobile bar */}
       <div
