@@ -16,9 +16,7 @@ export default function ProductCard({ product }: { product: Product }) {
   const [adding, setAdding] = useState(false);
   const wishlisted = isWishlisted(product.id);
 
-  const discount = product.originalPrice
-    ? getDiscount(product.price, product.originalPrice)
-    : 0;
+  const discount = product.originalPrice ? getDiscount(product.price, product.originalPrice) : 0;
 
   function handleAddToBag(e: React.MouseEvent) {
     e.preventDefault();
@@ -31,18 +29,18 @@ export default function ProductCard({ product }: { product: Product }) {
   }
 
   return (
-    <article className="group flex flex-col">
+    <article className="group">
       {/* Image */}
       <div className="relative overflow-hidden bg-cream-100 dark:bg-brand-900">
         {/* Badges */}
-        <div className="absolute left-3 top-3 z-10 flex flex-col gap-1">
+        <div className="absolute left-0 top-3 z-10 flex flex-col gap-0.5">
           {discount > 0 && (
-            <span className="bg-brand-900 dark:bg-gold-600 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.15em] text-white dark:text-brand-950">
+            <span className="bg-brand-900 dark:bg-white px-2.5 py-0.5 text-[9px] font-medium uppercase tracking-[0.15em] text-white dark:text-brand-950">
               -{discount}%
             </span>
           )}
           {product.isNew && (
-            <span className="bg-gold-600 px-2 py-0.5 text-[9px] font-semibold uppercase tracking-[0.15em] text-white dark:text-brand-950">
+            <span className="bg-gold-600 px-2.5 py-0.5 text-[9px] font-medium uppercase tracking-[0.15em] text-white">
               New
             </span>
           )}
@@ -51,87 +49,75 @@ export default function ProductCard({ product }: { product: Product }) {
         {/* Wishlist */}
         <button
           onClick={(e) => { e.preventDefault(); e.stopPropagation(); toggle(product); }}
-          aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-          className="absolute right-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/80 dark:bg-brand-950/80 backdrop-blur-sm transition-all hover:scale-110"
+          aria-label={wishlisted ? 'Remove from wishlist' : 'Save to wishlist'}
+          className="absolute right-2.5 top-2.5 z-10 flex h-7 w-7 items-center justify-center bg-white/90 dark:bg-brand-950/90 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity"
         >
-          <svg className={`h-3.5 w-3.5 transition-colors ${wishlisted ? 'fill-red-500 text-red-500' : 'fill-none text-brand-400 dark:text-brand-500'}`} stroke="currentColor" strokeWidth={1.8} viewBox="0 0 24 24">
+          <svg className={`h-3.5 w-3.5 ${wishlisted ? 'fill-red-500 text-red-500' : 'fill-none text-brand-600 dark:text-brand-400'}`} stroke="currentColor" strokeWidth={1.5} viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
           </svg>
         </button>
 
+        {/* Portrait image — 3:4 like fashion sites */}
         <Link href={`/products/${product.slug}`} aria-label={product.name}>
-          <div className="relative aspect-square w-full">
+          <div className="relative aspect-[3/4] w-full">
             <Image
               src={product.image}
               alt={product.name}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
             />
+            {product.stock === 0 && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white/60 dark:bg-brand-950/60">
+                <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-brand-600 dark:text-brand-400">Out of Stock</span>
+              </div>
+            )}
           </div>
         </Link>
 
-        {/* Add to bag — slides up on hover */}
-        <button
-          onClick={handleAddToBag}
-          disabled={adding || product.stock === 0}
-          aria-label={`Add ${product.name} to bag`}
-          className="
-            absolute bottom-0 left-0 right-0 z-10
-            translate-y-full
-            bg-brand-900/95 dark:bg-brand-800/95 py-3
-            text-[10px] font-medium uppercase tracking-[0.2em] text-white
-            transition-transform duration-300 ease-out
-            hover:bg-brand-800 dark:hover:bg-brand-700
-            group-hover:translate-y-0
-            hidden sm:block
-            disabled:bg-brand-700
-          "
-        >
-          {adding ? '✓ Added to Bag' : product.stock === 0 ? 'Out of Stock' : 'Add to Bag'}
-        </button>
+        {/* Quick add — slides up */}
+        {product.stock > 0 && (
+          <button
+            onClick={handleAddToBag}
+            disabled={adding}
+            className="absolute bottom-0 left-0 right-0 z-10 translate-y-full bg-brand-950/95 py-3 text-[9px] font-medium uppercase tracking-[0.22em] text-white transition-transform duration-300 ease-out group-hover:translate-y-0 hidden sm:block"
+          >
+            {adding ? '✓ Added' : 'Quick Add'}
+          </button>
+        )}
       </div>
 
       {/* Info */}
-      <div className="flex flex-1 flex-col pt-3.5">
-        <Link
-          href={`/category/${product.categorySlug}`}
-          className="text-[9px] font-medium uppercase tracking-[0.22em] text-brand-400 transition-colors hover:text-gold-700 dark:text-brand-600 dark:hover:text-gold-500"
-          tabIndex={-1}
-        >
-          {product.category}
+      <div className="pt-3.5 pb-1">
+        <Link href={`/category/${product.categorySlug}`} tabIndex={-1}>
+          <p className="text-[9px] font-medium uppercase tracking-[0.22em] text-brand-400 dark:text-brand-600">
+            {product.category}
+          </p>
         </Link>
 
         <Link href={`/products/${product.slug}`}>
-          <h3 className="mt-1.5 font-sans text-[13px] font-medium leading-snug text-brand-900 dark:text-brand-200 transition-colors hover:text-gold-700 dark:hover:text-gold-400 line-clamp-2">
+          <h3 className="mt-1 text-[13px] font-medium leading-snug text-brand-900 dark:text-brand-200 transition-colors hover:text-gold-700 dark:hover:text-gold-400 line-clamp-2">
             {product.name}
           </h3>
         </Link>
 
-        <div className="mt-2 flex items-baseline gap-2">
-          <span className="text-[13px] font-semibold text-brand-900 dark:text-white">{formatPrice(product.price)}</span>
+        <div className="mt-1.5 flex items-baseline gap-2">
+          <span className="text-[13px] font-medium text-brand-900 dark:text-white">{formatPrice(product.price)}</span>
           {product.originalPrice && (
             <span className="text-[11px] text-brand-400 dark:text-brand-600 line-through">{formatPrice(product.originalPrice)}</span>
           )}
         </div>
 
-        {/* Mobile add button */}
-        <button
-          onClick={handleAddToBag}
-          disabled={adding || product.stock === 0}
-          className="
-            sm:hidden mt-3
-            w-full border border-brand-200 dark:border-brand-700 py-2.5
-            text-[10px] font-medium uppercase tracking-[0.2em] text-brand-700 dark:text-brand-400
-            transition-all duration-200
-            hover:border-brand-900 hover:bg-brand-900 hover:text-white
-            dark:hover:border-gold-600 dark:hover:bg-gold-600 dark:hover:text-brand-950
-            active:scale-[0.98]
-            disabled:border-brand-100 dark:disabled:border-brand-800 disabled:text-brand-300 dark:disabled:text-brand-700
-          "
-        >
-          {adding ? '✓ Added' : product.stock === 0 ? 'Out of Stock' : 'Add to Bag'}
-        </button>
+        {/* Mobile add */}
+        {product.stock > 0 && (
+          <button
+            onClick={handleAddToBag}
+            disabled={adding}
+            className="sm:hidden mt-3 w-full border border-brand-200 dark:border-brand-700 py-2.5 text-[9px] font-medium uppercase tracking-[0.22em] text-brand-700 dark:text-brand-400 transition-all hover:border-brand-900 hover:bg-brand-900 hover:text-white dark:hover:border-white dark:hover:bg-white dark:hover:text-brand-950"
+          >
+            {adding ? '✓ Added' : 'Add to Bag'}
+          </button>
+        )}
       </div>
     </article>
   );
