@@ -22,7 +22,9 @@ const navRight = [
   { href: '/about', label: 'About' },
 ];
 
-export default function Header() {
+const DEFAULT_BAR = 'Free delivery on orders above NPR 2,000 · Cash on Delivery · 7-day returns';
+
+export default function Header({ announcementBar }: { announcementBar?: string }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -62,7 +64,7 @@ export default function Header() {
     }`}>
       {/* Announcement bar */}
       <div className="bg-brand-900 dark:bg-brand-950 border-b border-transparent dark:border-brand-900 py-1.5 text-center text-[10px] font-medium tracking-[0.22em] text-brand-300 uppercase">
-        Free delivery on orders above NPR 2,000 &nbsp;·&nbsp; Cash on Delivery &nbsp;·&nbsp; 7-day returns
+        {announcementBar || DEFAULT_BAR}
       </div>
 
       {/* Main header */}

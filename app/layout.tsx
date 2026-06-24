@@ -9,7 +9,7 @@ import { ToastProvider } from '@/context/ToastContext';
 import { CheckoutProvider } from '@/context/CheckoutContext';
 import { WishlistProvider } from '@/context/WishlistContext';
 import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/JsonLd';
-import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/data';
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, getSettings } from '@/lib/data';
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
@@ -60,6 +60,7 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const settings = getSettings();
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
       <head>
@@ -80,7 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <WishlistProvider>
             <ToastProvider>
               <CheckoutProvider>
-                <StoreShell header={<Header />} footer={<Footer />}>{children}</StoreShell>
+                <StoreShell header={<Header announcementBar={settings.announcementBar} />} footer={<Footer />}>{children}</StoreShell>
               </CheckoutProvider>
             </ToastProvider>
           </WishlistProvider>

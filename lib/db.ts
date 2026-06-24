@@ -112,3 +112,40 @@ export function createOrder(order: Omit<Order, 'id' | 'createdAt' | 'status'>): 
   saveOrders([newOrder, ...orders]);
   return newOrder;
 }
+
+// ── Reviews ──────────────────────────────────────────────────────────────────
+
+export interface Review {
+  id: string;
+  productId: string;
+  productSlug: string;
+  author: string;
+  rating: number;  // 1–5
+  title: string;
+  body: string;
+  createdAt: string;
+  verified: boolean;
+}
+
+export function getReviews(): Review[] {
+  try { return readJSON<Review[]>('reviews.json'); } catch { return []; }
+}
+
+export function saveReviews(reviews: Review[]): void {
+  writeJSON('reviews.json', reviews);
+}
+
+export function getReviewsByProduct(productId: string): Review[] {
+  return getReviews().filter((r) => r.productId === productId);
+}
+
+export function createReview(review: Omit<Review, 'id' | 'createdAt'>): Review {
+  const reviews = getReviews();
+  const newReview: Review = {
+    ...review,
+    id: Math.random().toString(36).slice(2, 10),
+    createdAt: new Date().toISOString(),
+  };
+  saveReviews([newReview, ...reviews]);
+  return newReview;
+}

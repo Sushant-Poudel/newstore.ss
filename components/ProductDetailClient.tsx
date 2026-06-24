@@ -14,6 +14,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import AnimateIn from '@/components/AnimateIn';
 import RecentlyViewed, { trackView } from '@/components/RecentlyViewed';
 import ImageLightbox from '@/components/ImageLightbox';
+import ProductReviews from '@/components/ProductReviews';
 
 interface Props {
   product: Product;
@@ -339,9 +340,27 @@ export default function ProductDetailClient({ product, related }: Props) {
               </ul>
             </div>
 
-            <p className="text-[11px] text-brand-400 dark:text-brand-700">
-              SKU: {product.sku} · Brand: {product.brand}
-            </p>
+            <div className="flex items-center justify-between">
+              <p className="text-[11px] text-brand-400 dark:text-brand-700">
+                SKU: {product.sku} · Brand: {product.brand}
+              </p>
+              <button
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({ title: product.name, url: window.location.href });
+                  } else {
+                    navigator.clipboard.writeText(window.location.href);
+                  }
+                }}
+                aria-label="Share product"
+                className="flex items-center gap-1.5 text-[10px] font-medium uppercase tracking-[0.18em] text-brand-400 transition-colors hover:text-brand-900 dark:hover:text-white"
+              >
+                <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+                Share
+              </button>
+            </div>
           </div>
         </AnimateIn>
       </div>
@@ -355,6 +374,9 @@ export default function ProductDetailClient({ product, related }: Props) {
           </p>
         </div>
       </AnimateIn>
+
+      {/* Reviews */}
+      <ProductReviews productId={product.id} productSlug={product.slug} />
 
       {/* Related */}
       {related.length > 0 && (
