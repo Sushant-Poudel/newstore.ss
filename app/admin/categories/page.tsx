@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import type { Category } from '@/lib/types';
 
-const INPUT = 'w-full rounded border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder-gray-600 focus:border-amber-500 focus:outline-none';
+const INPUT = 'w-full rounded border border-white/10 bg-[#1a1a1a] px-3 py-2 text-sm text-white placeholder-gray-600 focus:border-amber-500 focus:outline-none transition-colors';
 
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -49,7 +49,7 @@ export default function AdminCategoriesPage() {
 
       <div className="mt-6 space-y-4">
         {categories.map((cat, idx) => (
-          <div key={cat.id} className="rounded-lg border border-gray-800 bg-gray-900 p-5">
+          <div key={cat.id} className="rounded-xl border border-white/5 bg-[#161616] p-5">
             <div className="mb-4 flex items-center gap-3">
               <span className="text-2xl">{cat.icon}</span>
               <div>

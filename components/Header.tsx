@@ -10,6 +10,7 @@ import ThemeToggle from '@/components/ThemeToggle';
 const navLeft = [
   { href: '/products', label: 'Shop All' },
   { href: '/new-arrivals', label: 'New Arrivals' },
+  { href: '/sale', label: 'Sale', highlight: true },
   { href: '/category/shoes', label: 'Shoes' },
   { href: '/category/clothing', label: 'Clothing' },
   { href: '/category/bags', label: 'Bags' },
@@ -87,7 +88,14 @@ export default function Header({ announcementBar }: { announcementBar?: string }
               </button>
               <nav className="hidden items-center gap-7 lg:flex" aria-label="Primary navigation left">
                 {navLeft.map((link) => (
-                  <Link key={link.href} href={link.href} className={linkClass(link.href)}>
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={link.highlight
+                      ? `text-[11px] font-medium uppercase tracking-[0.18em] transition-colors duration-200 ${pathname === link.href ? 'text-red-600 dark:text-red-400' : 'text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300'}`
+                      : linkClass(link.href)
+                    }
+                  >
                     {link.label}
                   </Link>
                 ))}
@@ -184,8 +192,9 @@ export default function Header({ announcementBar }: { announcementBar?: string }
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`block py-3 text-[11px] font-medium uppercase tracking-[0.22em] border-b border-cream-100 dark:border-brand-900 ${
-                  pathname === link.href ? 'text-brand-900 dark:text-white' : 'text-brand-500 dark:text-brand-500'
+                className={`block py-3 text-[11px] font-medium uppercase tracking-[0.22em] border-b border-cream-100 dark:border-brand-900 ${'highlight' in link && link.highlight
+                  ? pathname === link.href ? 'text-red-600 dark:text-red-400' : 'text-red-500 dark:text-red-400'
+                  : pathname === link.href ? 'text-brand-900 dark:text-white' : 'text-brand-500 dark:text-brand-500'
                 }`}
               >
                 {link.label}

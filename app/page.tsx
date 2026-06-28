@@ -104,7 +104,7 @@ export default function HomePage() {
               New deals added every week — only at {SITE_NAME}.
             </p>
             <Link
-              href="/products"
+              href="/sale"
               className="mt-10 inline-block border border-white/30 px-10 py-3.5 text-[11px] font-medium uppercase tracking-[0.22em] text-white transition-all hover:bg-white hover:text-brand-950"
             >
               Browse Sale Items

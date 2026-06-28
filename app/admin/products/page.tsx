@@ -22,6 +22,29 @@ export default function AdminProductsPage() {
         </Link>
       </div>
 
+      {/* Low-stock alert strip */}
+      {(() => {
+        const lowStock = products.filter((p) => p.stock > 0 && p.stock <= 5);
+        const outOfStock = products.filter((p) => p.stock === 0);
+        if (lowStock.length === 0 && outOfStock.length === 0) return null;
+        return (
+          <div className="flex flex-wrap gap-3">
+            {outOfStock.length > 0 && (
+              <div className="flex items-center gap-2 rounded-lg border border-red-500/20 bg-red-500/5 px-4 py-2.5">
+                <span className="h-2 w-2 rounded-full bg-red-500" />
+                <span className="text-xs text-red-400"><span className="font-semibold">{outOfStock.length}</span> out of stock</span>
+              </div>
+            )}
+            {lowStock.length > 0 && (
+              <div className="flex items-center gap-2 rounded-lg border border-amber-500/20 bg-amber-500/5 px-4 py-2.5">
+                <span className="h-2 w-2 rounded-full bg-amber-500" />
+                <span className="text-xs text-amber-400"><span className="font-semibold">{lowStock.length}</span> low stock (≤5 units)</span>
+              </div>
+            )}
+          </div>
+        );
+      })()}
+
       <div className="overflow-hidden rounded-xl border border-white/5">
         <table className="w-full text-sm">
           <thead className="border-b border-white/5 bg-[#161616]">
@@ -56,10 +79,11 @@ export default function AdminProductsPage() {
                   </span>
                 </td>
                 <td className="px-4 py-3 text-center">
-                  <div className="flex items-center justify-center gap-1">
+                  <div className="flex flex-wrap items-center justify-center gap-1">
                     {p.isFeatured && <span className="rounded-full bg-blue-900/40 px-2 py-0.5 text-[9px] text-blue-400">Featured</span>}
                     {p.isBestseller && <span className="rounded-full bg-purple-900/40 px-2 py-0.5 text-[9px] text-purple-400">Best</span>}
                     {p.isNew && <span className="rounded-full bg-emerald-900/40 px-2 py-0.5 text-[9px] text-emerald-400">New</span>}
+                    {p.originalPrice && p.originalPrice > p.price && <span className="rounded-full bg-red-900/40 px-2 py-0.5 text-[9px] text-red-400">Sale</span>}
                   </div>
                 </td>
                 <td className="px-4 py-3 text-right">

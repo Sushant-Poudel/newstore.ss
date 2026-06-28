@@ -1,6 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { getOrders, getProducts } from '@/lib/db';
+import ExportCsvButton from '@/components/admin/ExportCsvButton';
 
 function BarChart({ data }: { data: { label: string; value: number; color?: string }[] }) {
   const max = Math.max(...data.map((d) => d.value), 1);
@@ -102,9 +103,26 @@ export default function AnalyticsPage() {
 
   return (
     <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-xl font-semibold text-white">Analytics</h1>
-        <p className="mt-0.5 text-sm text-gray-500">Store performance overview</p>
+      <div className="flex items-center justify-between gap-4">
+        <div>
+          <h1 className="text-xl font-semibold text-white">Analytics</h1>
+          <p className="mt-0.5 text-sm text-gray-500">Store performance overview</p>
+        </div>
+        <ExportCsvButton
+          filename="orders-export.csv"
+          label="Export Orders"
+          data={orders.map((o) => ({
+            id: o.id,
+            customer: o.customer.name,
+            email: o.customer.email,
+            phone: o.customer.phone,
+            city: o.customer.city,
+            total: o.total,
+            status: o.status,
+            items: o.items.length,
+            date: o.createdAt,
+          }))}
+        />
       </div>
 
       {/* KPI cards */}
