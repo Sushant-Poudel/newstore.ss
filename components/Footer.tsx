@@ -41,12 +41,27 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Categories */}
+          {/* Shop */}
           <div>
             <h3 className="mb-6 text-[10px] font-semibold uppercase tracking-[0.25em] text-white">
-              Categories
+              Shop
             </h3>
             <ul className="space-y-3.5">
+              <li>
+                <Link href="/products" className="text-[13px] text-brand-500 transition-colors hover:text-gold-400">
+                  All Products
+                </Link>
+              </li>
+              <li>
+                <Link href="/new-arrivals" className="text-[13px] text-brand-500 transition-colors hover:text-gold-400">
+                  New Arrivals
+                </Link>
+              </li>
+              <li>
+                <Link href="/sale" className="text-[13px] text-red-500/70 transition-colors hover:text-red-400">
+                  Sale
+                </Link>
+              </li>
               {getCategories().map((cat) => (
                 <li key={cat.slug}>
                   <Link href={`/category/${cat.slug}`} className="text-[13px] text-brand-500 transition-colors hover:text-gold-400">
@@ -54,11 +69,6 @@ export default function Footer() {
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/products" className="text-[13px] text-brand-500 transition-colors hover:text-gold-400">
-                  All Products
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -70,11 +80,11 @@ export default function Footer() {
             <ul className="space-y-3.5">
               {[
                 { href: '/about', label: 'About Us' },
-                { href: '/contact', label: 'Contact' },
-                { href: '/contact', label: 'Shipping Policy' },
-                { href: '/contact', label: 'Returns & Refunds' },
-                { href: '/contact', label: 'Size Guide' },
-                { href: '/contact', label: 'FAQs' },
+                { href: '/contact', label: 'Contact Us' },
+                { href: '/wishlist', label: 'Wishlist' },
+                { href: '/cart', label: 'Cart' },
+                { href: '/contact', label: 'Shipping & Delivery' },
+                { href: '/contact', label: 'Returns Policy' },
               ].map(({ href, label }) => (
                 <li key={label}>
                   <Link href={href} className="text-[13px] text-brand-500 transition-colors hover:text-gold-400">

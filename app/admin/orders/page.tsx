@@ -35,7 +35,9 @@ export default function AdminOrdersPage() {
   const [updatingId, setUpdatingId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetch('/api/admin/orders').then((r) => r.json()).then(setOrders);
+    fetch('/api/admin/orders')
+      .then((r) => r.json())
+      .then((data: Order[]) => setOrders([...data].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())));
   }, []);
 
   async function updateStatus(id: string, status: Status) {
@@ -93,10 +95,10 @@ export default function AdminOrdersPage() {
   return (
     <div className="p-6 space-y-5">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-semibold text-white">Orders</h1>
-          <p className="mt-0.5 text-sm text-gray-500">{orders.length} total orders</p>
+          <p className="mt-0.5 text-sm text-gray-500">{orders.length} total · NPR {orders.filter(o => o.status === 'completed').reduce((s, o) => s + o.total, 0).toLocaleString()} earned</p>
         </div>
       </div>
 

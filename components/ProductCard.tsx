@@ -65,8 +65,21 @@ export default function ProductCard({ product }: { product: Product }) {
               alt={product.name}
               fill
               sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+              className={`object-cover transition-all duration-500 ease-out ${
+                product.images?.[1]
+                  ? 'group-hover:opacity-0 group-hover:scale-[1.02]'
+                  : 'group-hover:scale-[1.03]'
+              }`}
             />
+            {product.images?.[1] && (
+              <Image
+                src={product.images[1]}
+                alt={`${product.name} alternate view`}
+                fill
+                sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                className="object-cover opacity-0 transition-all duration-500 ease-out group-hover:opacity-100 group-hover:scale-[1.02]"
+              />
+            )}
             {product.stock === 0 && (
               <div className="absolute inset-0 flex items-center justify-center bg-white/60 dark:bg-brand-950/60">
                 <span className="text-[10px] font-medium uppercase tracking-[0.2em] text-brand-600 dark:text-brand-400">Out of Stock</span>
@@ -107,6 +120,21 @@ export default function ProductCard({ product }: { product: Product }) {
             <span className="text-[11px] text-brand-400 dark:text-brand-600 line-through">{formatPrice(product.originalPrice)}</span>
           )}
         </div>
+
+        {product.rating > 0 && (
+          <div className="mt-1.5 flex items-center gap-1.5">
+            <div className="flex items-center gap-0.5">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg key={i} className={`h-2.5 w-2.5 ${i < Math.round(product.rating) ? 'text-gold-500 fill-gold-500' : 'text-cream-300 dark:text-brand-800 fill-current'}`} viewBox="0 0 24 24">
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                </svg>
+              ))}
+            </div>
+            {product.reviewCount > 0 && (
+              <span className="text-[9px] text-brand-400 dark:text-brand-600">({product.reviewCount})</span>
+            )}
+          </div>
+        )}
 
         {/* Mobile add */}
         {product.stock > 0 && (

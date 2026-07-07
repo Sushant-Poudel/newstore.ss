@@ -9,6 +9,7 @@ import { ToastProvider } from '@/context/ToastContext';
 import { CheckoutProvider } from '@/context/CheckoutContext';
 import { WishlistProvider } from '@/context/WishlistContext';
 import { OrganizationJsonLd, WebSiteJsonLd } from '@/components/JsonLd';
+import BackToTop from '@/components/BackToTop';
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION, getSettings } from '@/lib/data';
 
 const playfair = Playfair_Display({
@@ -82,6 +83,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <ToastProvider>
               <CheckoutProvider>
                 <StoreShell header={<Header announcementBar={settings.announcementBar} />} footer={<Footer />}>{children}</StoreShell>
+                <BackToTop />
               </CheckoutProvider>
             </ToastProvider>
           </WishlistProvider>
